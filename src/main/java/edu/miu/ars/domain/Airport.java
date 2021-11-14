@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,5 +34,31 @@ public class Airport {
         this.code = code;
         this.name = name;
         this.address = address;
+
+        arrivals = new ArrayList<>();
+        departures = new ArrayList<>();
+    }
+
+    public void addArrivals(Flight flight){
+        if(flight != null)
+            arrivals.add(flight);
+    }
+    public boolean removeArrivals(Flight flight){
+        boolean result = false;
+        if(flight != null){
+            result = arrivals.remove(flight);
+        }
+        return result;
+    }
+
+    public void addDeparture(Flight flight){
+        if(flight != null)
+             departures.add(flight);
+    }
+    public boolean removeDeparture(Flight flight){
+        boolean result = false;
+        if(flight != null)
+             result = departures.remove(flight);
+        return result;
     }
 }

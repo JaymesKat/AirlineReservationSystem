@@ -1,14 +1,11 @@
 package edu.miu.ars.config;
 
 import edu.miu.ars.filter.JwtAuthorizationFilter;
-import edu.miu.ars.service.AppUserService;
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import edu.miu.ars.service.IAppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,25 +17,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.support.RequestDataValueProcessor;
-
-import javax.sql.DataSource;
-import java.util.Arrays;
-import java.util.Properties;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final AppUserService appUserService;
+    private final IAppUser appUserService;
 
     @Autowired
-    public SecurityConfiguration(@Lazy AppUserService appUserService) {
+    public SecurityConfiguration(@Lazy IAppUser appUserService) {
         this.appUserService = appUserService;
     }
 

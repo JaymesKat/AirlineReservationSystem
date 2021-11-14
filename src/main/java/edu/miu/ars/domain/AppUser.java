@@ -1,17 +1,11 @@
 package edu.miu.ars.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import java.time.LocalDate;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -27,11 +21,12 @@ public class AppUser {
     private String role;
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
     @Embedded
     private Address address;
 
-    public AppUser(String email, String password, String role, String firstName, String lastName, LocalDate dateOfBirth, Address address) {
+    public AppUser(String email, String password, String role, String firstName, String lastName, Date dateOfBirth, Address address) {
         this.email = email;
         this.password = password;
         this.role = role;
