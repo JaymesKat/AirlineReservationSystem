@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -19,7 +20,7 @@ public class Ticket {
     @Column(length = 20,nullable = false)
     private String number;
     @Temporal(TemporalType.DATE)
-    private LocalDate flightDate;
+    private Date flightDate;
 
     @ManyToOne
     Reservation reservation;
@@ -27,7 +28,7 @@ public class Ticket {
     @OneToOne
     FlightInfo flightInfo;
 
-    public Ticket(String number, LocalDate flightDate) {
+    public Ticket(String number, Date flightDate) {
         this.number = number;
         this.flightDate = flightDate;
     }

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Setter
@@ -20,9 +21,9 @@ public class FlightInfo {
     private Flight flight;
 
     @Temporal(TemporalType.DATE)
-    private LocalDate departureDate;
+    private Date departureDate;
 
-    public FlightInfo(Flight flight, LocalDate departureDate) {
+    public FlightInfo(Flight flight, Date departureDate) {
         this.flight = flight;
         this.departureDate = departureDate;
     }

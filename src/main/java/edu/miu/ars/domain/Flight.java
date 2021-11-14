@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 @Setter
@@ -30,11 +31,11 @@ public class Flight {
 
     //TODO: Narayan - Put Temporal on time later (Putting String is easy to pass parameter from postman)
     @Temporal(TemporalType.TIME)
-    private LocalTime departureTime;
+    private Date departureTime;
     @Temporal(TemporalType.TIME)
-    private LocalTime arrivalTime;
+    private Date arrivalTime;
 
-    public Flight(String number, int capacity, Airport departure, Airport arrival, LocalTime departureTime, LocalTime arrivalTime) {
+    public Flight(String number, int capacity, Airport departure, Airport arrival, Date departureTime, Date arrivalTime) {
         this.number = number;
         this.capacity = capacity;
         this.origin = departure;
