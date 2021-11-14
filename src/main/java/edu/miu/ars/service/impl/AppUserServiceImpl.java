@@ -57,10 +57,12 @@ public class AppUserServiceImpl implements IAppUser {
     }
 
     @Override
-    public AppUser removeAppUser(long id) {
+    public String removeAppUser(long id) {
         AppUser user= appUserRepository.getById(id);
-        if(user != null)
-             appUserRepository.delete(user);
-        return user;
+        if(user != null) {
+            appUserRepository.delete(user);
+            return "AppUser has been successfully deleted";
+        }
+        return "AppUser not found";
     }
 }
