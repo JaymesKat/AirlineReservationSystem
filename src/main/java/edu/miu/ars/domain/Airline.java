@@ -3,11 +3,8 @@ package edu.miu.ars.domain;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SecondaryTable;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -16,10 +13,14 @@ public class Airline {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(length=2,nullable = false) // Add size validation
     private String code;
     private String name;
-    @Column(table = "history")
+    @Column(table = "history", length = 2000)
     private String history;
+    @OneToMany(mappedBy="airline")
+    @OrderBy("departureTime desc")
+    private List<Flight> flights;
 
     public Airline(String code, String name, String history) {
         this.code = code;

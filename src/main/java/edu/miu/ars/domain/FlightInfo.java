@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Setter
@@ -20,9 +18,11 @@ public class FlightInfo {
     private Long id;
     @OneToOne
     private Flight flight;
-    private String departureDate;
 
-    public FlightInfo(Flight flight, String departureDate) {
+    @Temporal(TemporalType.DATE)
+    private LocalDate departureDate;
+
+    public FlightInfo(Flight flight, LocalDate departureDate) {
         this.flight = flight;
         this.departureDate = departureDate;
     }
