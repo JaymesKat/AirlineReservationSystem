@@ -28,6 +28,8 @@ public class Reservation {
     @ManyToOne
     private Passenger passenger;
 
+    private ReservarionState status;
+
   //  @OneToMany
     //private List<FlightInfo> flightInfoList = new ArrayList<>();
 
