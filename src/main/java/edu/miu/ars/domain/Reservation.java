@@ -21,6 +21,12 @@ public class Reservation {
     @Column(length = 6,nullable = false)
     private String code;
 
+    @ManyToOne
+    @JoinTable(name="agent_reservation")
+    private Agent agent;
+
+    @ManyToOne
+    private Passenger passenger;
 
   //  @OneToMany
     //private List<FlightInfo> flightInfoList = new ArrayList<>();
@@ -36,8 +42,17 @@ public class Reservation {
     }*/
 
     public void addTicket(Ticket ticket) {
-        if (null != ticket)
+        if ( ticket != null)
             ticketList.add(ticket);
+    }
+
+    public boolean removeTicket(Ticket ticket){
+        boolean result = false;
+        if(ticket != null){
+           result =  ticketList.remove(ticket);
+        }
+        return result;
+
     }
 
 
