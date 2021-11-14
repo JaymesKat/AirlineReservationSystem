@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -17,10 +16,18 @@ public class Ticket {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(length = 20,nullable = false)
     private String number;
-    private String flightDate;
+    @Temporal(TemporalType.DATE)
+    private LocalDate flightDate;
 
-    public Ticket(String number, String flightDate) {
+    @ManyToOne
+    Reservation reservation;
+
+    @OneToOne
+    FlightInfo flightInfo;
+
+    public Ticket(String number, LocalDate flightDate) {
         this.number = number;
         this.flightDate = flightDate;
     }
