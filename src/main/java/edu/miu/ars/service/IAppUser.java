@@ -12,5 +12,5 @@ public interface IAppUser {
     List<AppUser> getAppUsers();
     AppUser getAppUser(long id);
     AppUser updateAppUser(long id, AppUser appUser);
-    AppUser removeAppUser(long id);
+    String removeAppUser(long id);
 }
