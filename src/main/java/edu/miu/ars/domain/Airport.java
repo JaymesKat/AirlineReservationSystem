@@ -1,5 +1,6 @@
 package edu.miu.ars.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,9 +24,11 @@ public class Airport {
     private Address address;
 
     @OneToMany(mappedBy = "destination")
+    @JsonIgnore
     List<Flight> arrivals;
 
     @OneToMany(mappedBy = "origin")
+    @JsonIgnore
     List<Flight> departures;
 
 
@@ -33,7 +36,6 @@ public class Airport {
         this.code = code;
         this.name = name;
         this.address = address;
-
         arrivals = new ArrayList<>();
         departures = new ArrayList<>();
     }
