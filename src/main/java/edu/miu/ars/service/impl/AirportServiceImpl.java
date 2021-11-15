@@ -7,9 +7,11 @@ import edu.miu.ars.repository.AirlineRepository;
 import edu.miu.ars.repository.AirportRepository;
 import edu.miu.ars.service.IAirport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AirportServiceImpl implements IAirport {
     @Autowired
     private AirportRepository airportRepository;
