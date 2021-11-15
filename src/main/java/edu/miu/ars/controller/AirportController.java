@@ -1,6 +1,5 @@
 package edu.miu.ars.controller;
 
-import edu.miu.ars.domain.Airline;
 import edu.miu.ars.domain.Airport;
 import edu.miu.ars.service.IAirport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,31 +12,31 @@ import java.util.List;
 public class AirportController {
 
     @Autowired
-    IAirport iAirport;
+    IAirport airportService;
 
 
     @GetMapping("/{id}")
     public Airport getAirport(@PathVariable int id){
-        return iAirport.getAirport(id);
+        return airportService.getAirport(id);
     }
 
     @GetMapping
     public List<Airport> getAirports(){
-        return iAirport.getAirports();
+        return airportService.getAirports();
     }
 
     @PostMapping
     public Airport addAirport(@RequestBody Airport airport){
-        return iAirport.addAirport(airport);
+        return airportService.addAirport(airport);
     }
 
     @PutMapping("/{id}")
     public Airport updateAirport(@PathVariable long id, @RequestBody Airport airport){
-        return iAirport.updateAirport(id, airport);
+        return airportService.updateAirport(id, airport);
     }
 
     @DeleteMapping("/{id}")
     public String removeAirport(@PathVariable long id){
-        return iAirport.removeAirport(id);
+        return airportService.removeAirport(id);
     }
 }

@@ -1,6 +1,5 @@
 package edu.miu.ars.controller;
 
-import edu.miu.ars.domain.Airport;
 import edu.miu.ars.domain.AppUser;
 import edu.miu.ars.service.IAppUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,31 +12,31 @@ import java.util.List;
 public class AppUserController {
 
     @Autowired
-    IAppUser iAppUser;
+    IAppUser appUserService;
 
 
     @GetMapping("/{id}")
     public AppUser getAirport(@PathVariable int id){
-        return iAppUser.getAppUser(id);
+        return appUserService.getAppUser(id);
     }
 
     @GetMapping
     public List<AppUser> getAppUsers(){
-        return iAppUser.getAppUsers();
+        return appUserService.getAppUsers();
     }
 
     @PostMapping
     public AppUser addAppUser(@RequestBody AppUser appUser){
-        return iAppUser.addAppUser(appUser);
+        return appUserService.addAppUser(appUser);
     }
 
     @PutMapping("/{id}")
     public AppUser updateAppUser(@PathVariable long id, @RequestBody AppUser appUser){
-        return iAppUser.updateAppUser(id, appUser);
+        return appUserService.updateAppUser(id, appUser);
     }
 
     @DeleteMapping("/{id}")
     public String removeAppUser(@PathVariable long id){
-        return iAppUser.removeAppUser(id);
+        return appUserService.removeAppUser(id);
     }
 }
