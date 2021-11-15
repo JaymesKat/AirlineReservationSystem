@@ -1,60 +1,32 @@
 package edu.miu.ars.service.impl;
 
-import edu.miu.ars.domain.Airline;
 import edu.miu.ars.domain.FlightInfo;
-
-import edu.miu.ars.repository.AirlineRepository;
-import edu.miu.ars.repository.FlightInfoRepository;
-import edu.miu.ars.service.FlightInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 
-@Service
-public class FlightInfoServiceImpl implements FlightInfoService {
-
-    private FlightInfoRepository flightInfoRepository;
-
-    @Autowired
-    public FlightInfoServiceImpl(FlightInfoRepository flightInfoRepository) {
-        this.flightInfoRepository = flightInfoRepository;
-    }
+public class FlightInfoServiceImpl implements IFlightInfo {
     @Override
-    public FlightInfo save(FlightInfo flightInfo) {
-        return null != flightInfo ? flightInfoRepository.save(flightInfo) : null;
+    public FlightInfo addAFlightInfo(FlightInfo flightInfo) {
+        return null;
     }
 
     @Override
-    public List<FlightInfo> findAll() {
-        return flightInfoRepository.findAll();
+    public List<FlightInfo> getFlightInfos() {
+        return null;
     }
 
     @Override
-    public FlightInfo findById(Long id) {
-        return flightInfoRepository.findById(id).orElse(null);
+    public FlightInfo getFlightInfo(long id) {
+        return null;
     }
 
     @Override
-    public boolean update(FlightInfo flightInfo, Long id) {
-        FlightInfo updateFlight = findById(id);
-        if(updateFlight != null){
-            updateFlight.setDepartureDate(flightInfo.getDepartureDate());
-            updateFlight.setFlight(flightInfo.getFlight());
-            updateFlight.setTickets(flightInfo.getTickets());
-            save(updateFlight);
-        }
-        return false;
+    public FlightInfo updateFlightInfo(long id, FlightInfo flightInfo) {
+        return null;
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        FlightInfo flightInfo = findById(id);
-        if (null != flightInfo) {
-            flightInfoRepository.delete(flightInfo);
-            return true;
-        }
-        return false;
+    public String removeFlightInfo(long id) {
+        return null;
     }
 }
