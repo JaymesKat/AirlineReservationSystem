@@ -13,22 +13,21 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Agent extends AppUser {
-//    @OneToMany
-//    private List<Passenger> passengerList = new ArrayList<>();
+public class Agent extends User {
     @OneToMany
-    private List<Reservation> reservationList = new ArrayList<>();
+    private List<Passenger> passengerList = new ArrayList<>();
 
-    public void addReservation(Reservation reservation) {
-        if (reservation != null)
-            reservationList.add(reservation);
+
+    public void addPassenger(Passenger passenger) {
+        if (passenger != null)
+            passengerList.add(passenger);
     }
 
-    public boolean removeReservation(Reservation reservation){
-        boolean result = false;
-
-        if (reservation != null)
-           result = reservationList.add(reservation);
-        return result;
-    }
+//    public boolean removeReservation(Reservation reservation){
+//        boolean result = false;
+//
+//        if (reservation != null)
+//           result = reservationList.add(reservation);
+//        return result;
+//    }
 }

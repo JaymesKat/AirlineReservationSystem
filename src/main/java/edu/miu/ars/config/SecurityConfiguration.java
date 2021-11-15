@@ -1,7 +1,7 @@
 package edu.miu.ars.config;
 
 import edu.miu.ars.filter.JwtAuthorizationFilter;
-import edu.miu.ars.service.IAppUser;
+import edu.miu.ars.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,10 +23,10 @@ import org.springframework.web.servlet.support.RequestDataValueProcessor;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final IAppUser appUserService;
+    private final AppUserService appUserService;
 
     @Autowired
-    public SecurityConfiguration(@Lazy IAppUser appUserService) {
+    public SecurityConfiguration(@Lazy AppUserService appUserService) {
         this.appUserService = appUserService;
     }
 

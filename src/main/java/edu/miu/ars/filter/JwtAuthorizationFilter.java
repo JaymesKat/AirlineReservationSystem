@@ -1,14 +1,9 @@
 package edu.miu.ars.filter;
 
 import edu.miu.ars.constant.AppConstant;
-import edu.miu.ars.util.JwtUtil;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -38,8 +34,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws IOException, ServletException {
         UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
-        String header = JwtUtil.getToken(request);
-        if (StringUtils.isEmpty(header) || !header.startsWith(AppConstant.TOKEN_PREFIX)) {
+        String header = request.getHeader("auth");
+        if (header == null || Objects.equals(header, "") || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -48,41 +44,23 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = JwtUtil.getToken(request);
-        if (StringUtils.isNotEmpty(token)) {
-            try {
-                byte[] signingKey = AppConstant.JWT_SECRET.getBytes();
-
-                Jws<Claims> parsedToken = Jwts.parser()
-                        .setSigningKey(signingKey)
-                        .parseClaimsJws(token.replace("Bearer", ""));
-
-                String username = parsedToken
-                        .getBody()
-                        .getSubject();
-
-                List<SimpleGrantedAuthority> authorities = ((List<?>) parsedToken.getBody()
-                        .get("rol")).stream()
-                        .map(authority -> new SimpleGrantedAuthority((String) authority))
-                        .collect(Collectors.toList());
-
-                if (StringUtils.isNotEmpty(username)) {
-                    return new UsernamePasswordAuthenticationToken(username, null, authorities);
-                } else {
-                    return null;
-                }
-            } catch (ExpiredJwtException exception) {
-                log.warning("Request to parse expired JWT : {} failed : {} " + token + " " + exception.getMessage());
-            } catch (UnsupportedJwtException exception) {
-                log.warning("Request to parse unsupported JWT : {} failed : {} " + token + " " + exception.getMessage());
-            } catch (MalformedJwtException exception) {
-                log.warning("Request to parse invalid JWT : {} failed : {} " + token + " " + exception.getMessage());
-            } catch (IllegalArgumentException exception) {
-                log.warning("Request to parse empty or null JWT : {} failed : {} " + token + " " + exception.getMessage());
-            }
+        String token = request.getHeader("auth");
+        if (token == null || token.equals("")) {
+            return null;
         }
+        String JwtSecret = AppConstant.JWT_SECRET;
+        Jws<Claims> parsedToken = Jwts.parser()
+                .setSigningKey(JwtSecret.getBytes())
+                .parseClaimsJws(token.replace("Bearer ", ""));
 
-        return null;
+        String userName = parsedToken.getBody().getSubject();
+        List<SimpleGrantedAuthority> authorities = ((List<?>) parsedToken.getBody()
+                .get("role")).stream()
+                .map(authority -> new SimpleGrantedAuthority((String) authority))
+                .collect(Collectors.toList());
+
+        return new UsernamePasswordAuthenticationToken(userName, null, authorities);
     }
+
 
 }

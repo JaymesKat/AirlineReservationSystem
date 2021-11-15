@@ -1,51 +1,63 @@
 package edu.miu.ars.service.impl;
 
 import edu.miu.ars.domain.Airline;
-import edu.miu.ars.domain.Flight;
 import edu.miu.ars.repository.AirlineRepository;
-import edu.miu.ars.repository.FlightRepository;
-import edu.miu.ars.service.IAirline;
+import edu.miu.ars.service.AirlineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-@Service
-public class AirlineServiceImpl implements IAirline {
-    @Autowired
-    private AirlineRepository airlineRepository;
 
-    @Override
-    public Airline addAirline(Airline airline) {
-        return airlineRepository.save(airline);
+@Service
+@Transactional
+public class AirlineServiceImpl implements AirlineService {
+
+    private final AirlineRepository airlineRepository;
+
+    @Autowired
+    public AirlineServiceImpl(AirlineRepository airlineRepository) {
+        this.airlineRepository = airlineRepository;
     }
 
     @Override
-    public List<Airline> getAirlines() {
+    public Airline save(Airline airline) {
+        return null != airline ? airlineRepository.save(airline) : null;
+    }
+
+    @Override
+    public List<Airline> findAll() {
         return airlineRepository.findAll();
     }
 
     @Override
-    public Airline getAirline(long id) {
-        return airlineRepository.getById(id);
+
+    public Airline findById(Long id) {
+        return airlineRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Airline updateAirline(long id, Airline airline) {
-        // Don't use setFlights to override Flights
-        Airline updateAirline = airlineRepository.getById(id);
-        updateAirline.setCode(airline.getCode());
-        updateAirline.setHistory(airline.getHistory());
-        updateAirline.setName(airline.getName());
-        return airlineRepository.save(updateAirline);
-    }
-
-    @Override
-    public String removeAirline(long id) {
-        Airline airline = airlineRepository.getById(id);
-        if(airline!=null) {
-            airlineRepository.delete(airline);
-            return "Airline with id "+id+" has been deleted";
+    public boolean update(Airline airline, Long id) {
+        Airline airlineFromDB = findById(id);
+        if (airlineFromDB != null) {
+            airlineFromDB.setCode(airline.getCode());
+            airlineFromDB.setName(airline.getName());
+            airlineFromDB.setFlights(airline.getFlights());
+            airlineFromDB.setHistory(airline.getHistory());
+            save(airlineFromDB);
+            return true;
         }
-        return "Airline not found";
+        return false;
     }
+
+    @Override
+    public boolean deleteById(Long id) {
+        Airline airlineFromDB = findById(id);
+        if (null != airlineFromDB) {
+            airlineRepository.delete(airlineFromDB);
+            return true;
+        }
+        return false;
+    }
+
 }
