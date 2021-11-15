@@ -69,7 +69,7 @@ public class FlightController {
                 ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
     }
 
-    @PostConstruct
+   // @PostConstruct
     public void saveDummyData() {
         Flight f1 = new Flight("A76", 100, new Date(), new Date());
         Airport a1= new Airport("CDR","Cader Rapid", new Address("Street","City","Zip","State"));
@@ -80,7 +80,6 @@ public class FlightController {
         f1.setAirline(airline);
 
         flightService.save(f1);
-
 
     }
 }

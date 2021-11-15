@@ -16,8 +16,8 @@ public class FlightInfoController {
     private final FlightInfoService flightInfoService;
 
     @Autowired
-    public FlightInfoController(FlightInfoService iFlightInfo) {
-        this.flightInfoService = iFlightInfo;
+    public FlightInfoController(FlightInfoService flightInfoService) {
+        this.flightInfoService = flightInfoService;
     }
 
     @GetMapping("/{id}")

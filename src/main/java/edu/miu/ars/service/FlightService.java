@@ -8,4 +8,6 @@ import java.util.List;
 public interface FlightService extends GenericService<Flight> {
     @Query("select f from Flight f where f.origin.code= :code")
     List<Flight> findFlightsByAirportCode(String code);
+
+
 }

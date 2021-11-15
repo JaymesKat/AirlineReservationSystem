@@ -58,4 +58,9 @@ public class ReservationServiceImpl implements ReservationService {
         }
         return false;
     }
+
+    @Override
+    public List<Reservation> findReservationById() {
+        return reservationRepository.findFlightsByAirportCode();
+    }
 }

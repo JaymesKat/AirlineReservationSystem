@@ -17,15 +17,11 @@ public class Reservation {
     @Column(length = 6,nullable = false)
     private String code;
 
-     //@OneToMany
-     //private List<FlightInfo> flightInfoList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany(mappedBy = "reservation",cascade = CascadeType.PERSIST)
     private List<Ticket> ticketList = new ArrayList<>();
-    /*  public void addFlightInfo(FlightInfo flightInfo) {
-        if (null != flightInfo)
-          flightInfoList.add(flightInfo);
-            }*/
+
+
     public void addTicket(Ticket ticket) {
         if ( ticket != null)
             ticketList.add(ticket);
