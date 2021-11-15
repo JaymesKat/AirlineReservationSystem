@@ -22,6 +22,11 @@ public class Reservation {
     private List<Ticket> ticketList = new ArrayList<>();
 
 
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(32) default 'PENDING'")
+    private ReservationState status;
+
+
     public void addTicket(Ticket ticket) {
         if ( ticket != null)
             ticketList.add(ticket);

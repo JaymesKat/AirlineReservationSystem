@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Passenger extends User {
     @OneToMany
+    @JoinColumn(name = "passenger_id")
     private List<Reservation> reservationList = new ArrayList<>();
 
     public void addReservation(Reservation reservation) {
