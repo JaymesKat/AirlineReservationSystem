@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Passenger extends User {
-    @OneToMany(mappedBy="passenger")
+    @OneToMany
     private List<Reservation> reservationList = new ArrayList<>();
 
     public void addReservation(Reservation reservation) {
