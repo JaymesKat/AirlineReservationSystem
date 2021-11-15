@@ -1,7 +1,9 @@
 package edu.miu.ars.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @SecondaryTable(name="history")
+@Setter
+@Getter
 public class Airline {
     @Id
     @GeneratedValue

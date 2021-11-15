@@ -37,11 +37,25 @@ public class AirlineServiceImpl implements AirlineService {
 
     @Override
     public boolean update(Airline airline, Long id) {
+        Airline airlineFromDB = findById(id);
+        if (airlineFromDB != null) {
+            airlineFromDB.setCode(airline.getCode());
+            airlineFromDB.setName(airline.getName());
+            airlineFromDB.setFlights(airline.getFlights());
+            airlineFromDB.setHistory(airline.getHistory());
+            save(airlineFromDB);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean deleteById(Long id) {
+        Airline airlineFromDB = findById(id);
+        if (null != airlineFromDB) {
+            airlineRepository.delete(airlineFromDB);
+            return true;
+        }
         return false;
     }
 }
