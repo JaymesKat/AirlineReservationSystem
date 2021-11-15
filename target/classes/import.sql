@@ -59,3 +59,16 @@ INSERT INTO `airport` (id, code, name, city,state,street,zip) VALUES (18, 'IAD',
 INSERT INTO `airport` (id, code, name, city,state,street,zip) VALUES (19, 'SLC', 'Salt-Lake-City-International', 'Salt-Lake-City', 'UT', '', '456');
 INSERT INTO `airport` (id, code, name, city,state,street,zip) VALUES (20, 'DFW', 'Dallas-Fort-Worth', 'DFW', 'TX', '', '456');
 
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (1, '11:30:00', 200,  '01:00:00', 'UA125', 1, 5, 3);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (2, '16:30:00', 180,  '18:30:00', 'DL212', 2, 2, 8);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (3, '10:30:00', 200, '01:00:00', 'WN125', 3, 5, 4);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (4,  '16:30:00', 180,  '18:30:00', 'AA212', 5, 2, 8);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (5,  '11:30:00', 250,  '01:00:00', 'UA526', 1, 5, 13);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (6,  '12:30:00', 160,  '14:30:00', 'DL224', 2, 2, 10);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (7, '06:30:00', 200, '08:00:00', 'WN125', 3, 5, 4);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (8,  '07:45:00', 230,  '09:30:00', 'WN202', 3, 7, 14);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (9,  '09:45:00', 220,  '09:30:00', 'WN672', 3, 9, 15);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (10,  '19:30:00', 180,  '21:30:00', 'NK332', 9, 5, 9);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (11,  '20:30:00', 180,  '22:00:00', 'NK266', 9, 5, 10);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (12,  '11:30:00', 250,  '01:00:00', 'UA516', 1, 8, 15);
+INSERT INTO flight (id, arrival_time, capacity, departure_time, number, airline_id, destination_id, origin_id) VALUES (13,  '11:30:00', 250,  '01:00:00', 'UA727', 1, 10, 16);
