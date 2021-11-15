@@ -1,54 +1,61 @@
 package edu.miu.ars.service.impl;
 
-import edu.miu.ars.domain.Airline;
 import edu.miu.ars.domain.Reservation;
-import edu.miu.ars.repository.AirlineRepository;
 import edu.miu.ars.repository.ReservationRepository;
-import edu.miu.ars.service.IAirline;
-import edu.miu.ars.service.IReservation;
+import edu.miu.ars.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class ReservationServiceImpl implements IReservation {
+@Transactional
+public class ReservationServiceImpl implements ReservationService {
+    private final ReservationRepository reservationRepository;
     @Autowired
-    private ReservationRepository reservationRepository;
+    public ReservationServiceImpl(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
+    }
+
 
     @Override
-    public Reservation addReservation(Reservation reservation) {
-        return reservationRepository.save(reservation);
+    public Reservation save(Reservation reservation) {
+        return reservation != null ? reservationRepository.save(reservation): null;
     }
 
     @Override
-    public List<Reservation> getReservations() {
+    public List<Reservation> findAll() {
         return reservationRepository.findAll();
     }
 
     @Override
-    public Reservation getReservation(long id) {
-
-        return reservationRepository.getById(id);
+    public Reservation findById(Long id) {
+        return reservationRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Reservation updateReservation(long id, Reservation reservation) {
-        // Don't use setFlights to override Flights
-
-        Reservation updateReservation = reservationRepository.getById(id);
-        updateReservation.setCode(reservation.getCode());
-        updateReservation.setStatus(reservation.getStatus());
-        return reservationRepository.save(updateReservation);
-    }
-
-    @Override
-    public String removeReservation(long id) {
-        Reservation reservation = reservationRepository.getById(id);
-        if(reservation!=null) {
-            reservationRepository.delete(reservation);
-            return "Reservation with id "+id+" has been deleted";
+    public boolean update(Reservation reservation, Long id) {
+        Reservation reservationFromDB = findById(id);
+        if(reservationFromDB != null){
+            reservationFromDB.setCode(reservation.getCode());
+          //  reservationFromDB.setStatus(reservation.getStatus());
+          //  reservationFromDB.setAgent(reservation.getAgent());
+          //  reservationFromDB.setPassenger(reservation.getPassenger());
+            reservationFromDB.setTicketList(reservation.getTicketList());
+            save(reservationFromDB);
+            return true;
         }
-        return "Reservation not found";
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        Reservation reservation = findById(id);
+        if(reservation != null){
+            reservationRepository.delete(reservation);
+            return true;
+        }
+        return false;
     }
 }

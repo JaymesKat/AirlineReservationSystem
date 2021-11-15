@@ -1,41 +1,55 @@
 package edu.miu.ars.controller;
 
+import edu.miu.ars.constant.ResponseConstant;
 import edu.miu.ars.domain.Reservation;
-import edu.miu.ars.service.IReservation;
+import edu.miu.ars.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/reservations")
+@RequestMapping("/reservations")
 public class ReservationController {
 
+    private final ReservationService reservationService;
+
     @Autowired
-    IReservation reservationService;
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @GetMapping("/{id}")
-    public Reservation getReservation(@PathVariable long id){
-        return reservationService.getReservation(id);
+    public ResponseEntity<?> findById(@PathVariable long id){
+        Reservation reservation = reservationService.findById(id);
+        return reservation != null ? ResponseEntity.ok(reservation) :
+                ResponseEntity.badRequest().body(ResponseConstant.NOT_FOUND);
     }
 
     @GetMapping
-    public List<Reservation> getReservations(){
-        return reservationService.getReservations();
+    public List<Reservation> findAll(){
+        return reservationService.findAll();
     }
 
     @PostMapping
-    public Reservation addReservation(@RequestBody Reservation reservation){
-        return reservationService.addReservation(reservation);
+    public ResponseEntity<?> save(@RequestBody Reservation reservation){
+        return reservationService.save(reservation) != null ? ResponseEntity.ok(ResponseConstant.SAVE_SUCCESS)
+                : ResponseEntity.badRequest().body(ResponseConstant.SAVE_FAILED);
     }
 
     @PutMapping("/{id}")
-    public Reservation updateReservation(@PathVariable long id,@RequestBody Reservation reservation){
-        return reservationService.updateReservation(id, reservation);
+    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody Reservation reservation){
+        if(id.equals(reservation.getId())){
+            return reservationService.update(reservation, id) ? ResponseEntity.ok(ResponseConstant.UPDATE_SUCCESS)
+                    : ResponseEntity.badRequest().body(ResponseConstant.UPDATE_FAILED);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/{id}")
-    public String removeReservation(@PathVariable long id){
-        return reservationService.removeReservation(id);
+    public ResponseEntity<?> deleteById(@PathVariable long id){
+       return reservationService.deleteById(id) ? ResponseEntity.ok(ResponseConstant.DELETE_SUCCESS)
+               : ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
     }
 }

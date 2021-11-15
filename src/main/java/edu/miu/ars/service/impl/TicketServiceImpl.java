@@ -1,49 +1,60 @@
 package edu.miu.ars.service.impl;
 
-import edu.miu.ars.domain.Airline;
 import edu.miu.ars.domain.Ticket;
-import edu.miu.ars.repository.AirlineRepository;
 import edu.miu.ars.repository.TicketRepository;
-import edu.miu.ars.service.ITicket;
+import edu.miu.ars.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
-public class TicketServiceImpl implements ITicket {
+@Transactional
+public class TicketServiceImpl implements TicketService {
+    private final TicketRepository ticketRepository;
+
     @Autowired
-    private TicketRepository ticketRepository;
+    public TicketServiceImpl(TicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
+    }
+
 
     @Override
-    public Ticket addATicket(Ticket ticket) {
-        return ticketRepository.save(ticket);
+    public Ticket save(Ticket ticket) {
+        return ticket != null ? ticketRepository.save(ticket) : null;
     }
 
     @Override
-    public List<Ticket> getTickets() {
+    public List<Ticket> findAll() {
         return ticketRepository.findAll();
     }
 
     @Override
-    public Ticket getTicket(long id) {
-        return ticketRepository.getById(id);
+    public Ticket findById(Long id) {
+        return ticketRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Ticket updateTicket(long id, Ticket ticket) {
-        Ticket updateTicket = ticketRepository.getById(id);
-        updateTicket.setNumber(ticket.getNumber());
-        updateTicket.setFlightDate(ticket.getFlightDate());
-        return ticketRepository.save(updateTicket);
-    }
-
-    @Override
-    public String removeTicket(long id) {
-        Ticket ticket = ticketRepository.getById(id);
-        if(ticket!=null) {
-            ticketRepository.delete(ticket);
-            return "Ticket with id "+id+" has been deleted";
+    public boolean update(Ticket ticket, Long id) {
+        Ticket ticketFromDB = findById(id);
+        if(ticketFromDB != null){
+            ticketFromDB.setNumber(ticket.getNumber());
+            ticketFromDB.setFlightDate(ticket.getFlightDate());
+            ticketFromDB.setFlightInfo(ticket.getFlightInfo());
+            ticketFromDB.setReservation(ticket.getReservation());
+            save(ticketFromDB);
+            return true;
         }
-        return "Ticket not found";
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        Ticket ticket = findById(id);
+        if(ticket != null){
+            ticketRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

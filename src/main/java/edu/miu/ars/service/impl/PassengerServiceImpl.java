@@ -1,6 +1,5 @@
 package edu.miu.ars.service.impl;
 
-import edu.miu.ars.domain.AppUser;
 import edu.miu.ars.domain.Passenger;
 import edu.miu.ars.domain.Reservation;
 import edu.miu.ars.repository.PassengerRepository;
