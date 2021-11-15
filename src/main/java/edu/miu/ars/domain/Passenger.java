@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Passenger extends AppUser {
+public class Passenger extends User {
     @OneToMany
     @JoinColumn(name = "passenger_id")
     private List<Reservation> reservationList = new ArrayList<>();

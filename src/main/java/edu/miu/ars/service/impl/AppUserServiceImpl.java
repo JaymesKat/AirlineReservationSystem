@@ -36,6 +36,16 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
+    public boolean update(AppUser appUser, Long id) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return false;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return null;
     }

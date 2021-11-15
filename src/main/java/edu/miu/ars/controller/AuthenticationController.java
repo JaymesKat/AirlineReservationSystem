@@ -20,14 +20,12 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api")
 public class AuthenticationController {
-    private final AppUserService appUserService;
-    private final AuthenticationManager authenticationManager;
+       private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthenticationController(AppUserService appUserService, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
-        this.appUserService = appUserService;
-        this.authenticationManager = authenticationManager;
+    public AuthenticationController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+              this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
 

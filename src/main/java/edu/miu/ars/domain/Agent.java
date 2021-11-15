@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Agent extends AppUser {
+public class Agent extends User {
     @OneToMany
     private List<Passenger> passengerList = new ArrayList<>();
 

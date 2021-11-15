@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -16,17 +15,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
-
-    public static String getToken(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null)
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(AppConstant.AUTH_TOKEN)) {
-                    return cookie.getValue();
-                }
-            }
-        return null;
-    }
 
     public String generateToken(Authentication authentication) {
         List<String> roles= authentication.getAuthorities().stream()
