@@ -1,5 +1,5 @@
 package edu.miu.ars.domain;
 
-public enum ReservarionState {
+public enum ReservationState {
     PENDING, CONFIRMED, CANCELLED
 }
