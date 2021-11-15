@@ -7,7 +7,7 @@ import edu.miu.ars.domain.Reservation;
 import java.util.List;
 
 public interface IReservation {
-    Agent addReservation(Reservation reservation);
+    Reservation addReservation(Reservation reservation);
     List<Reservation> getReservations();
     Reservation getReservation(long id);
     Reservation updateReservation(long id, Reservation reservation);

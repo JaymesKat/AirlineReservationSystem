@@ -1,6 +1,5 @@
 package edu.miu.ars.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +26,8 @@ public class Reservation {
 
     @ManyToOne
     private Passenger passenger;
+
+    private ReservationState status;
 
   //  @OneToMany
     //private List<FlightInfo> flightInfoList = new ArrayList<>();
