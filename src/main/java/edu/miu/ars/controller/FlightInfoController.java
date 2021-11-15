@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/flightInfo")
+@RequestMapping("/api/flight-info")
 public class FlightInfoController {
 
     private final FlightInfoService flightInfoService;

@@ -40,6 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/api/airports/**").permitAll()
+                .antMatchers("/api/flights/**").permitAll()
+                .antMatchers("/api/flight-info/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
