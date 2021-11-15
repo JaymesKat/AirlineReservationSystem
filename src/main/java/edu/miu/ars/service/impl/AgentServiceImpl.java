@@ -1,40 +1,62 @@
 package edu.miu.ars.service.impl;
 
 import edu.miu.ars.domain.Agent;
+import edu.miu.ars.domain.Airline;
 import edu.miu.ars.repository.AgentRepository;
-import edu.miu.ars.service.IAgent;
+import edu.miu.ars.repository.AirlineRepository;
+import edu.miu.ars.service.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class AgentServiceImpl implements IAgent {
+public class AgentServiceImpl implements AgentService {
+
+    private AgentRepository agentRepository;
 
     @Autowired
-    private AgentRepository agentRepository;
-    @Override
-    public Agent addAgent(Agent agent) {
-        return agentRepository.save(agent);
+    public AgentServiceImpl(AgentRepository agentRepository) {
+        this.agentRepository = agentRepository;
     }
 
     @Override
-    public List<Agent> getAgents() {
+    public Agent save(Agent agent) {
+        return null != agent ? agentRepository.save(agent) : null;
+    }
+
+    @Override
+    public List<Agent> findAll() {
         return agentRepository.findAll();
     }
 
     @Override
-    public Agent getAgent(long id) {
-        return agentRepository.getById(id);
+    public Agent findById(Long id) {
+        return agentRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Agent updateAgent(long id, Agent agent) {
-//        AppUser newAgent= agentRepository.getById(id);
-        return null;
+    public boolean update(Agent agent, Long id) {
+        Agent agentFromDB = findById(id);
+        if (agentFromDB != null) {
+            agentFromDB.setFirstName(agent.getFirstName());
+            agentFromDB.setLastName(agent.getLastName());
+            agentFromDB.setDateOfBirth(agent.getDateOfBirth());
+            agentFromDB.setEmail(agent.getEmail());
+            agentFromDB.setAddress(agent.getAddress());
+            agentFromDB.setPassengerList(agent.getPassengerList());
+            save(agentFromDB);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public String removeAgent(long id) {
-        return "";
+    public boolean deleteById(Long id) {
+        Agent agent = findById(id);
+        if (null != agent) {
+            agentRepository.delete(agent);
+            return true;
+        }
+        return false;
     }
 }
