@@ -31,6 +31,7 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
+
     public Airline findById(Long id) {
         return airlineRepository.findById(id).orElse(null);
     }
@@ -58,4 +59,5 @@ public class AirlineServiceImpl implements AirlineService {
         }
         return false;
     }
+
 }

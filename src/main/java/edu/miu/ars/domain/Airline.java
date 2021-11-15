@@ -1,18 +1,19 @@
 package edu.miu.ars.domain;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@SecondaryTable(name="history")
-@Setter
 @Getter
+@Setter
+@SecondaryTable(name="history")
 public class Airline {
     @Id
     @GeneratedValue
@@ -22,7 +23,7 @@ public class Airline {
     private String name;
     @Column(table = "history", length = 2000)
     private String history;
-    @OneToMany(mappedBy="airline")
+    @OneToMany(mappedBy="airline",cascade = CascadeType.ALL)
     @OrderBy("departureTime desc")
     private List<Flight> flights;
 
@@ -30,5 +31,14 @@ public class Airline {
         this.code = code;
         this.name = name;
         this.history = history;
+        flights = new ArrayList<>();
+    }
+
+
+    public void addFlight(Flight flight){
+        flights.add(flight);
+    }
+    public boolean removeFlight(Flight flight){
+        return flights.remove(flight);
     }
 }

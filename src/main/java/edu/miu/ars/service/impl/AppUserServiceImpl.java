@@ -4,14 +4,15 @@ import edu.miu.ars.domain.AppUser;
 import edu.miu.ars.repository.AppUserRepository;
 import edu.miu.ars.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-@Service
-public class AppUserServiceImpl implements AppUserService {
 
+
+@Service
+@Transactional
+public class AppUserServiceImpl implements AppUserService {
     private final AppUserRepository appUserRepository;
 
     @Autowired
@@ -20,8 +21,12 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public AppUser save(AppUser appUser) {
+    public AppUser getByEmail(String email) {
+        return null;
+    }
 
+    @Override
+    public AppUser save(AppUser appUser) {
         return null;
     }
 
@@ -43,15 +48,5 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public boolean deleteById(Long id) {
         return false;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
-    }
-
-    @Override
-    public AppUser getByEmail(String email) {
-        return null;
     }
 }
