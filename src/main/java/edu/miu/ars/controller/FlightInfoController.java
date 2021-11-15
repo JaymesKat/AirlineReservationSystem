@@ -1,9 +1,7 @@
 package edu.miu.ars.controller;
 
 import edu.miu.ars.constant.ResponseConstant;
-import edu.miu.ars.domain.Airline;
 import edu.miu.ars.domain.FlightInfo;
-import edu.miu.ars.service.AirlineService;
 import edu.miu.ars.service.FlightInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
