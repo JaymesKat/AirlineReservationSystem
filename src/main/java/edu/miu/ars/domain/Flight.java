@@ -1,11 +1,11 @@
 package edu.miu.ars.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -18,18 +18,19 @@ public class Flight {
     private Long id;
     private String number;
     private int capacity;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private Airport origin;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private Airport destination;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="airline_id")
+    @JsonIgnore
     private Airline airline;
 
-
-    //TODO: Narayan - Put Temporal on time later (Putting String is easy to pass parameter from postman)
     @Temporal(TemporalType.TIME)
     private Date departureTime;
     @Temporal(TemporalType.TIME)
@@ -40,6 +41,13 @@ public class Flight {
         this.capacity = capacity;
         this.origin = departure;
         this.destination = arrival;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+    }
+
+    public Flight(String number, int capacity, Date departureTime, Date arrivalTime) {
+        this.number = number;
+        this.capacity = capacity;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
     }

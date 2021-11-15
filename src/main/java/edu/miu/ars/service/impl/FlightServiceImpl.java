@@ -2,54 +2,68 @@ package edu.miu.ars.service.impl;
 
 import edu.miu.ars.domain.Flight;
 import edu.miu.ars.repository.FlightRepository;
-import edu.miu.ars.service.IFlight;
+import edu.miu.ars.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class FlightServiceImpl implements IFlight {
-    @Autowired
-    private FlightRepository flightRepository;
+@Transactional
+public class FlightServiceImpl implements FlightService {
+    
+    private final FlightRepository flightRepository;
 
-    @Override
-    public Flight addFlight(Flight flight) {
-        return flightRepository.save(flight);
+    @Autowired
+    public FlightServiceImpl(FlightRepository flightRepository) {
+        this.flightRepository = flightRepository;
     }
 
     @Override
-    public List<Flight> getFlights() { //pagination
+    public Flight save(Flight flight) {
+        return null != flight ? flightRepository.save(flight) : null;
+    }
+
+    @Override
+    public List<Flight> findAll() {
         return flightRepository.findAll();
     }
 
     @Override
-    public Flight getFlight(long id) {
+    public Flight findById(Long id) {
         return flightRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Flight updateFlight(long id, Flight f) {
-        Flight flight = flightRepository.getById(id);
-        flight.setNumber(f.getNumber());
-        flight.setCapacity(f.getCapacity());
-        flight.setDepartureTime(f.getDepartureTime());
-        flight.setArrivalTime(f.getArrivalTime());
-
-        flight.setAirline(f.getAirline());
-        flight.setOrigin(f.getOrigin());
-        flight.setDestination(f.getDestination());
-
-        return flightRepository.save(flight);
+    public boolean update(Flight flight, Long id) {
+        Flight flightFromDB = findById(id);
+        if (flightFromDB != null) {
+            flightFromDB.setAirline(flight.getAirline());
+            flightFromDB.setArrivalTime(flight.getArrivalTime());
+            flightFromDB.setCapacity(flight.getCapacity());
+            flightFromDB.setDestination(flight.getDestination());
+            flightFromDB.setNumber(flight.getNumber());
+            flightFromDB.setDepartureTime(flight.getDepartureTime());
+            flightFromDB.setOrigin(flight.getOrigin());
+            save(flightFromDB);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public String removeFlight(long id) {
-        Flight flight = flightRepository.getById(id);
-        if(flight!=null) {
-            flightRepository.delete(flight);
-            return "Flight with id "+id+" has been deleted";
+    public boolean deleteById(Long id) {
+        Flight flightFromDB = findById(id);
+        if (null != flightFromDB) {
+            flightRepository.delete(flightFromDB);
+            return true;
         }
-        return "Flight not found";
+        return false;
+    }
+
+    @Override
+    public List<Flight> findFlightsByAirportCode(String code) {
+        return flightRepository.findFlightsByAirportCode(code);
     }
 }
