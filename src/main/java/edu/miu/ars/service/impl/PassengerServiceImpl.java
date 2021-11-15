@@ -1,48 +1,61 @@
 package edu.miu.ars.service.impl;
 
-import edu.miu.ars.domain.AppUser;
+import edu.miu.ars.domain.Airline;
 import edu.miu.ars.domain.Passenger;
-import edu.miu.ars.domain.Reservation;
+import edu.miu.ars.repository.AirlineRepository;
 import edu.miu.ars.repository.PassengerRepository;
-import edu.miu.ars.service.IPassenger;
+import edu.miu.ars.service.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-public class PassengerServiceImpl implements IPassenger {
+@Service
+@Transactional
+public class PassengerServiceImpl implements PassengerService {
 
     @Autowired
-    private PassengerRepository passengerRepository;
+    private final PassengerRepository passengerRepository;
     @Autowired
-    private AppUserServiceImpl appUserService;
+    public PassengerServiceImpl(PassengerRepository passengerRepository) {
+        this.passengerRepository = passengerRepository;}
+
     @Override
-    public Passenger addPassenger(Passenger passenger) {
-        return passengerRepository.save(passenger);
+    public Passenger save(Passenger passenger) {
+        return null != passenger ? passengerRepository.save(passenger) : null;
     }
 
     @Override
-    public List<Passenger> getPassengers() {
+    public List<Passenger> findAll() {
         return passengerRepository.findAll();
     }
 
     @Override
-    public Passenger getPassenger(long id) {
-        return passengerRepository.getById(id);
+    public Passenger findById(Long id) {
+        return passengerRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Passenger updatePassenger(long id, Passenger passenger) {
-
-        return null;
-    }
-
-    @Override
-    public String removePassenger(long id) {
-        Passenger passenger = passengerRepository.getById(id);
-        if(passenger!=null) {
-            passengerRepository.delete(passenger);
-            return "Passenger with id "+id+" has been deleted";
+    public boolean update(Passenger passenger, Long id) {
+        Passenger passengerFromDB = findById(id);
+        if (passengerFromDB != null) {
+            passengerFromDB.setFirstName(passenger.getFirstName());
+            passengerFromDB.setLastName(passenger.getLastName());
+            passengerFromDB.setDateOfBirth(passenger.getDateOfBirth());
+            passengerFromDB.setReservationList(passenger.getReservationList());
+            save(passengerFromDB);
+            return true;
         }
-        return "Passenger not found";
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        Passenger passengerFromDB = findById(id);
+        if (null != passengerFromDB) {
+            passengerRepository.delete(passengerFromDB);
+            return true;
+        }
+        return false;
     }
 }
