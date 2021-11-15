@@ -108,7 +108,7 @@ INSERT INTO reservation (id, code, passenger_id) VALUES (6, 'GT534Z', 2);
 INSERT INTO reservation (id, code, passenger_id) VALUES (7, 'GH5T08', 3);
 INSERT INTO reservation (id, code, passenger_id) VALUES (8, 'KG539Z', 4);
 
-/*INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (1, '2021-11-14', '9636948949', 1, 1);
+INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (1, '2021-11-14', '9636948949', 1, 1);
 INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (2, '2021-11-14', '7663673815', 2, 2);
 INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (3, '2021-11-14', '3407539885', 3, 3);
 INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (10, '2021-11-16', '4065014484', 4, 4);
@@ -117,4 +117,4 @@ INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VA
 INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (6, '2021-11-24', '5136360734', 7, 7);
 INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (7, '2021-11-14', '3259234166', 4, 3);
 INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (8, '2021-11-19', '8430754305', 6, 3);
-INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (9, '2021-11-22', '2235797404', 7, 1);*/
+INSERT INTO ticket (id, flight_date, number, flight_info_id, reservation_id ) VALUES (9, '2021-11-22', '2235797404', 7, 1);
