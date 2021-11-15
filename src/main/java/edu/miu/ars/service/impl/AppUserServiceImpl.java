@@ -49,4 +49,5 @@ public class AppUserServiceImpl implements AppUserService {
     public boolean deleteById(Long id) {
         return false;
     }
+
 }

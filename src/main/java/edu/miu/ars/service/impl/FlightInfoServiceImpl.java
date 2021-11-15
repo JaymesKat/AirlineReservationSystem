@@ -1,7 +1,6 @@
 package edu.miu.ars.service.impl;
 
 import edu.miu.ars.domain.FlightInfo;
-import edu.miu.ars.service.IFlightInfo;
 
 import java.util.List;
 
