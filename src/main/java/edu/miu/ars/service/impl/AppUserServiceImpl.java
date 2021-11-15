@@ -2,18 +2,17 @@ package edu.miu.ars.service.impl;
 
 import edu.miu.ars.domain.AppUser;
 import edu.miu.ars.repository.AppUserRepository;
-import edu.miu.ars.service.IAppUser;
+import edu.miu.ars.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-public class AppUserServiceImpl implements IAppUser {
 
-    @Autowired
+@Service
+@Transactional
+public class AppUserServiceImpl implements AppUserService {
     private final AppUserRepository appUserRepository;
 
     @Autowired
@@ -27,40 +26,27 @@ public class AppUserServiceImpl implements IAppUser {
     }
 
     @Override
-    public AppUser addAppUser(AppUser appUser) {
-        return appUserRepository.save(appUser);
-    }
-
-    @Override
-    public List<AppUser> getAppUsers() { //pagination
-        return appUserRepository.findAll();
-    }
-
-    @Override
-    public AppUser getAppUser(long id) {
-        return appUserRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public AppUser updateAppUser(long id, AppUser appUser) {
-        AppUser updateAppUser = appUserRepository.findById(id).orElse(null);
-        if(updateAppUser != null) {
-            updateAppUser.setFirstName(appUser.getFirstName());
-            updateAppUser.setLastName(appUser.getLastName());
-            updateAppUser.setEmail(appUser.getEmail());
-            // TODO: Parse date string into Date Object
-            updateAppUser.setDateOfBirth(appUser.getDateOfBirth());
-
-            return appUserRepository.save(updateAppUser);
-        }
+    public AppUser save(AppUser appUser) {
         return null;
     }
 
     @Override
-    public AppUser removeAppUser(long id) {
-        AppUser user= appUserRepository.getById(id);
-        if(user != null)
-             appUserRepository.delete(user);
-        return user;
+    public List<AppUser> findAll() {
+        return null;
+    }
+
+    @Override
+    public AppUser findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(AppUser appUser, Long id) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return false;
     }
 }

@@ -6,4 +6,6 @@ public interface GenericService <T> {
     T save(T t);
     List<T> findAll();
     T findById(Long id);
+    boolean update(T t, Long id);
+    boolean deleteById(Long id);
 }

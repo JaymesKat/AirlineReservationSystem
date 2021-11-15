@@ -1,7 +1,6 @@
 package edu.miu.ars.controller;
 
 import edu.miu.ars.DTO.Login;
-import edu.miu.ars.service.IAppUser;
 import edu.miu.ars.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +17,14 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api")
 public class AuthenticationController {
-    private final IAppUser appUserService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthenticationController(IAppUser appUserService, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
-        this.appUserService = appUserService;
+    public AuthenticationController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
-
 
     @PostMapping("/auth")
     public ResponseEntity<?> auth(@RequestBody Login login) {
