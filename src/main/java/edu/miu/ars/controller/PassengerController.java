@@ -65,7 +65,7 @@ public class PassengerController {
     }
 
     //make-reservation
-    @PostMapping("/{pid}/make-reservation")
+    @PostMapping("/{pid}/reservations")
     public Reservation makeReservation(@PathVariable Long pid, @RequestBody ReservationDTO dto){
       return  passengerService.makeReservation(pid,dto);
     }
