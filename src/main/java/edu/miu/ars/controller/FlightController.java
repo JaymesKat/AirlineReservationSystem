@@ -2,6 +2,9 @@ package edu.miu.ars.controller;
 
 import edu.miu.ars.constant.AppConstant;
 import edu.miu.ars.constant.ResponseConstant;
+import edu.miu.ars.domain.Address;
+import edu.miu.ars.domain.Airline;
+import edu.miu.ars.domain.Airport;
 import edu.miu.ars.domain.Flight;
 import edu.miu.ars.service.FlightService;
 import edu.miu.ars.service.email.constant.JmsConstant;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -81,28 +85,28 @@ public class FlightController {
     }
 
 
-//    @PostConstruct
-//    public void saveDummyData() {
-//        Flight f1 = new Flight("A76", 100, new Date(), new Date(), parseDate("15/11/2021"), parseDate("16/11/2021"));
-//        Flight f2 = new Flight("A86", 150, new Date(), new Date(), parseDate("15/11/2021"), parseDate("16/11/2021"));
-//        Airport a1 = new Airport("CDR", "Cader Rapid", new Address("Street", "City", "Zip", "State"));
-//        Airport a2 = new Airport("ORD", "Chicago", new Address("Street1", "City1", "Zip1", "State1"));
-//        Airport a3 = new Airport("DMS", "De Moiens", new Address("Street", "City", "Zip", "State"));
-//        Airport a4 = new Airport("NPL", "Kathmandu", new Address("Street1", "City1", "Zip1", "State1"));
-//        Airline airline = new Airline("CD", "name", "history dshfkjsd");
-//        Airline airline2 = new Airline("UA", "UA", "history of UA");
-//
-//        f1.setOrigin(a1);
-//        f1.setDestination(a2);
-//        f1.setAirline(airline);
-//
-//        f2.setOrigin(a4);
-//        f2.setDestination(a3);
-//        f2.setAirline(airline2);
-//
-//        flightService.save(f1);
-//        flightService.save(f2);
-//    }
+    @PostConstruct
+    public void saveDummyData() {
+        Flight f1 = new Flight("A76", 100, new Date(), new Date(), parseDate("15/11/2021"), parseDate("16/11/2021"));
+        Flight f2 = new Flight("A86", 150, new Date(), new Date(), parseDate("15/11/2021"), parseDate("16/11/2021"));
+        Airport a1 = new Airport("CDR", "Cader Rapid", new Address("Street", "City", "Zip", "State"));
+        Airport a2 = new Airport("ORD", "Chicago", new Address("Street1", "City1", "Zip1", "State1"));
+        Airport a3 = new Airport("DMS", "De Moiens", new Address("Street", "City", "Zip", "State"));
+        Airport a4 = new Airport("NPL", "Kathmandu", new Address("Street1", "City1", "Zip1", "State1"));
+        Airline airline = new Airline("CD", "name", "history dshfkjsd");
+        Airline airline2 = new Airline("UA", "UA", "history of UA");
+
+        f1.setOrigin(a1);
+        f1.setDestination(a2);
+        f1.setAirline(airline);
+
+        f2.setOrigin(a4);
+        f2.setDestination(a3);
+        f2.setAirline(airline2);
+
+        flightService.save(f1);
+        flightService.save(f2);
+    }
 
     private Date parseDate(String date) {
         try {

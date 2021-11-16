@@ -28,7 +28,6 @@ public class Flight {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "airline_id")
-    @JsonIgnore
     private Airline airline;
 
     @Temporal(TemporalType.TIME)
