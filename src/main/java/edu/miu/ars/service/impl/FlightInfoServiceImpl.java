@@ -1,6 +1,8 @@
 package edu.miu.ars.service.impl;
 
 import edu.miu.ars.domain.Airline;
+import edu.miu.ars.domain.Airport;
+import edu.miu.ars.domain.Flight;
 import edu.miu.ars.domain.FlightInfo;
 import edu.miu.ars.repository.AirlineRepository;
 import edu.miu.ars.repository.FlightInfoRepository;
@@ -9,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -56,5 +60,11 @@ public class FlightInfoServiceImpl implements FlightInfoService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Flight> findFlightsForDate(String originCode, String destinationCode, Date date) {
+        return flightInfoRepository.findFlightsForDate(originCode, destinationCode, date);
+        //return flightInfoRepository.findFlightsForDate(date);
     }
 }

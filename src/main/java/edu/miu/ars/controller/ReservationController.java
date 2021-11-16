@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reservations")
+@RequestMapping("api/reservations")
 public class ReservationController {
 
     private final ReservationService reservationService;

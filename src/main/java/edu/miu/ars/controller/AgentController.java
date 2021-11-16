@@ -3,15 +3,18 @@ package edu.miu.ars.controller;
 import edu.miu.ars.constant.ResponseConstant;
 import edu.miu.ars.domain.Agent;
 import edu.miu.ars.domain.Airline;
+import edu.miu.ars.domain.Passenger;
 import edu.miu.ars.service.AgentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/agent")
+@RequestMapping("/api/agents")
 public class AgentController {
 
     private final AgentService agentService;
@@ -54,5 +57,12 @@ public class AgentController {
                 ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
 
     }
-
+    @GetMapping("/agent-passengers")
+    public ResponseEntity<?> findPassengerList(@RequestParam("agentId") Long id) {
+        List<Passenger> passengerList = new ArrayList<>();
+        if (id!=null)
+            passengerList = agentService.findPassengerList(id);
+        return passengerList.isEmpty() ? ResponseEntity.badRequest().body(ResponseConstant.NO_PASSENGERS_FOUND) :
+                ResponseEntity.ok(passengerList);
+    }
 }

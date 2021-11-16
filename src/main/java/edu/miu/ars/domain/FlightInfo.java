@@ -1,5 +1,6 @@
 package edu.miu.ars.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class FlightInfo {
     private Flight flight;
 
     @OneToMany(mappedBy = "flightInfo")
+    @JsonIgnore
     private List<Ticket> tickets;
 
     @Temporal(TemporalType.DATE)

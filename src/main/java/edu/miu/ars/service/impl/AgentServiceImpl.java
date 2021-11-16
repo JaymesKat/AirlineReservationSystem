@@ -2,6 +2,8 @@ package edu.miu.ars.service.impl;
 
 import edu.miu.ars.domain.Agent;
 import edu.miu.ars.domain.Airline;
+import edu.miu.ars.domain.Flight;
+import edu.miu.ars.domain.Passenger;
 import edu.miu.ars.repository.AgentRepository;
 import edu.miu.ars.repository.AirlineRepository;
 import edu.miu.ars.service.AgentService;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AgentServiceImpl implements AgentService {
 
@@ -58,5 +62,10 @@ public class AgentServiceImpl implements AgentService {
             return true;
         }
         return false;
+    }
+    @Override
+
+    public List<Passenger> findPassengerList(long id) {
+       return agentRepository.findPassengerList(id);
     }
 }

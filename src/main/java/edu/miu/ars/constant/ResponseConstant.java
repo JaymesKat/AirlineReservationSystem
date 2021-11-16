@@ -11,4 +11,6 @@ public class ResponseConstant {
     public static final String DELETE_SUCCESS = " Successfully Updated";
     public static final String DELETE_FAILED = "Update Failed";
     public static final String  NO_AIRLINES_FOUND = "There no airport for given code";
+    public static final String  NO_PASSENGERS_FOUND = "There is no passenger for given ID";
+    public static final String  NO_FLIGHTS_FOUND_FOR_THIS_DATE = "There is no flight for given Date";
 }
