@@ -60,7 +60,7 @@ public class AgentController {
 
     @GetMapping("/passangers-and-reservations-for")
     public ResponseEntity<?> findAllAirlineFlyingFromSpecificAirport(@RequestParam("agentid") Long id) {
-        List<Passenger> passangerReservationlist = new ArrayList<>();
+        List<?> passangerReservationlist = new ArrayList<>();
         if (id != null)
             passangerReservationlist = agentService.findPassangerForAgent(id);
         return passangerReservationlist.isEmpty() ? ResponseEntity.badRequest().body(ResponseConstant.NO_AIRLINES_FOUND) :

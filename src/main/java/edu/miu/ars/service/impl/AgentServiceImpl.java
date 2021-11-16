@@ -63,7 +63,7 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public List<Passenger> findPassangerForAgent(long id) {
+    public List<?> findPassangerForAgent(long id) {
         return agentRepository.findPassangerForAgent(id);
     }
 

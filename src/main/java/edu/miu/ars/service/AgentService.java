@@ -8,6 +8,6 @@ import edu.miu.ars.domain.Reservation;
 import java.util.List;
 
 public interface AgentService extends GenericService<Agent>{
-    List<Passenger> findPassangerForAgent(long id);
+    List<?> findPassangerForAgent(long id);
     List<Reservation> findReservationsForAgent(long id);
 }
