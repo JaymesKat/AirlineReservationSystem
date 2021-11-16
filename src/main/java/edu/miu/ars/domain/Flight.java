@@ -27,7 +27,7 @@ public class Flight {
     private Airport destination;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="airline_id")
+    @JoinColumn(name = "airline_id")
     @JsonIgnore
     private Airline airline;
 
@@ -36,19 +36,29 @@ public class Flight {
     @Temporal(TemporalType.TIME)
     private Date arrivalTime;
 
-    public Flight(String number, int capacity, Airport departure, Airport arrival, Date departureTime, Date arrivalTime) {
+    @Temporal(TemporalType.DATE)
+    private Date departureDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date arrivalDate;
+
+    public Flight(String number, int capacity, Airport departure, Airport arrival, Date departureTime, Date arrivalTime, Date departureDate, Date arrivalDate) {
         this.number = number;
         this.capacity = capacity;
         this.origin = departure;
         this.destination = arrival;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
     }
 
-    public Flight(String number, int capacity, Date departureTime, Date arrivalTime) {
+    public Flight(String number, int capacity, Date departureTime, Date arrivalTime, Date arrivalDate, Date departureDate) {
         this.number = number;
         this.capacity = capacity;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
     }
 }

@@ -10,8 +10,6 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class AppUserController {
 
-
-
     @GetMapping("/{id}")
     public AppUser getAirport(@PathVariable int id){
         return null;

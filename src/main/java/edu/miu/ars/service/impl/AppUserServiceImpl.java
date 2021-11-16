@@ -4,6 +4,10 @@ import edu.miu.ars.domain.AppUser;
 import edu.miu.ars.repository.AppUserRepository;
 import edu.miu.ars.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +26,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public AppUser getByEmail(String email) {
-        return null;
+        return appUserRepository.findByEmail(email);
     }
 
     @Override
@@ -50,4 +54,9 @@ public class AppUserServiceImpl implements AppUserService {
         return false;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        AppUser user = getByEmail(email);
+        return new User(user.getEmail(), user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole()));
+    }
 }

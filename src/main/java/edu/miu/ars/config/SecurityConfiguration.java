@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.RequestDataValueProcessor;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     private final AppUserService appUserService;
 
     @Autowired
@@ -40,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/api/airports/**").permitAll()
+                .antMatchers("/api/flights/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
@@ -64,7 +66,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //TODO:Narayan - Remove inmemory auth after everything done
         auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("admin"))
                 .roles("ADMIN");
-       // auth.userDetailsService(appUserService);
+        auth.inMemoryAuthentication().withUser("passenger").password(passwordEncoder().encode("passenger"))
+                .roles("USER");
+        auth.inMemoryAuthentication().withUser("agent").password(passwordEncoder().encode("agent"))
+                .roles("AGENT");
+        auth.userDetailsService(appUserService);
     }
 
     @Bean
