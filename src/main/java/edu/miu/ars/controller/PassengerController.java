@@ -55,11 +55,11 @@ public class PassengerController {
 
     @GetMapping("/{pid}/reservations")
     public List<?> reservations(@PathVariable Long pid ){
-        System.out.println("reached");
         return passengerService.viewListOfReservations(pid);
     }
 
-    @GetMapping("/{pid}/reservation-details")
+    //one reservation (underdevelopment)
+    @GetMapping("/{pid}/reservations/{id}")
     public List<?> reservationDetails(@PathVariable Long pid){
         return passengerService.viewReservationDetails(pid);
     }

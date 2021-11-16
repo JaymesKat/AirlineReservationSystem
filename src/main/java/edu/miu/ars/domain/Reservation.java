@@ -19,21 +19,12 @@ public class Reservation {
     @Column(length = 6)
     private String code;
 
-     @OneToMany(mappedBy = "reservation",cascade = {CascadeType.ALL})
-     private List<FlightInfo> flightInfos = new ArrayList<>();
+    @OneToMany(mappedBy = "reservation",cascade = {CascadeType.ALL})
+    private List<FlightInfo> flightInfos = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(32) default 'PENDING'")
     private ReservationState status;
-
-    @Override
-    public String toString() {
-        return "Reservation{" +
-                ", code='" + code + '\'' +
-                ", flightInfos=" + flightInfos +
-                ", status=" + status +
-                '}';
-    }
 
     public void addFlightInfo(FlightInfo flightInfo) {
         if ( flightInfo != null)
@@ -48,5 +39,13 @@ public class Reservation {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                ", code='" + code + '\'' +
+                ", flightInfos=" + flightInfos +
+                ", status=" + status +
+                '}';
+    }
 
 }
