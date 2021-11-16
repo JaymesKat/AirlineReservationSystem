@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
 
 
 @Entity
@@ -21,6 +24,9 @@ public class AppUser {
     private String email;
     private String password;
     private String role;
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     public AppUser(String email, String password, String role) {
         this.email = email;

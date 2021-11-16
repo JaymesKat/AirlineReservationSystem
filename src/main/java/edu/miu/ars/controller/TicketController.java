@@ -58,7 +58,7 @@ public class TicketController {
     }
 
 
-   // @PostConstruct
+    @PostConstruct
     private void dummyData(){
         //Reservation only has a code and list of tickets
         Reservation reservation = new Reservation();
