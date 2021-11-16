@@ -21,7 +21,7 @@ public class FlightInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Flight flight;
 
     //added
@@ -54,7 +54,7 @@ public class FlightInfo {
     @Override
     public String toString() {
         return "FlightInfo{" +
-                "flight=" + flight +
+               // "flight=" + flight +
                 ", tickets=" + tickets +
                 ", departureDate=" + departureDate +
                 '}';

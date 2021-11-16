@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface FlightService extends GenericService<Flight> {
     List<Flight> findFlightsByAirportCode(String code);
-
     Flight findByNumber(String number);
 
 }
