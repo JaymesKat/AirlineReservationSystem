@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/reservations")
+@RequestMapping("/api/reservations")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -59,6 +59,13 @@ public class ReservationController {
                : ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
     }
 
+    @PatchMapping ("/{reservationCode}/cancel")
+    public ResponseEntity<?> cancelReservation(@PathVariable String reservationCode){
+
+       return reservationService.cancelReservation(reservationCode)?ResponseEntity.ok(ResponseConstant.CANCEL_SUCCESS)
+               : ResponseEntity.badRequest().body(ResponseConstant.CANCEL_FAILED);
+
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package edu.miu.ars.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class Reservation {
 
 
     @OneToMany(mappedBy = "reservation",cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Ticket> ticketList = new ArrayList<>();
 
 

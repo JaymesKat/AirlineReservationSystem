@@ -1,6 +1,9 @@
 package edu.miu.ars.service.impl;
 
+import edu.miu.ars.domain.Flight;
 import edu.miu.ars.domain.Reservation;
+import edu.miu.ars.domain.ReservationState;
+import edu.miu.ars.domain.Ticket;
 import edu.miu.ars.repository.ReservationRepository;
 import edu.miu.ars.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -33,7 +37,12 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation findById(Long id) {
         return reservationRepository.findById(id).orElse(null);
     }
+    @Override
+    public Reservation findByCode(String reservationCode) {
 
+        return reservationRepository.findByCode(reservationCode);
+
+    }
     @Override
     public boolean update(Reservation reservation, Long id) {
         Reservation reservationFromDB = findById(id);
@@ -58,9 +67,26 @@ public class ReservationServiceImpl implements ReservationService {
         }
         return false;
     }
-
+    @Override
+    public ReservationState deleteByCode(String reservationCode) {
+        Reservation reservation = findByCode(reservationCode);
+        if(reservation != null)
+            reservationRepository.delete(reservation);
+        return ReservationState.CANCELLED;
+    }
     @Override
     public List<Reservation> findReservationById() {
         return reservationRepository.findFlightsByAirportCode();
+    }
+
+    @Override
+    public boolean cancelReservation(String reservationCode) {
+        Reservation reservation = findByCode(reservationCode);
+        if(reservation != null){
+            reservation.setStatus(ReservationState.CANCELLED);
+            return true;
+        }
+        return false;
+
     }
 }
