@@ -92,7 +92,6 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public Reservation makeReservation(Long pid,ReservationDTO dto) {
-
        Reservation reservation = new Reservation();
        reservation.setStatus(ReservationState.PENDING);
        String reservationCode = dto.generateCode();
@@ -105,13 +104,9 @@ public class PassengerServiceImpl implements PassengerService {
                .map(flightNumber -> flightService.findByNumber(flightNumber))
                .collect(Collectors.toList());
 
-       System.out.println("Flights: "+flights);
-
        List<FlightInfo> flightInfos = flights.stream()
-               .map(flight -> new FlightInfo(flight, DateUtil.parseDate(dto.getDepartureDate())))
+               .map(flight -> flightInfoService.createFromFlight(flight, dto.getDepartureDate()))
                .collect(Collectors.toList());
-
-        System.out.println("Flight Infos: "+flightInfos);
 
        for(FlightInfo flightInfo: flightInfos)
            reservation.addFlightInfo(flightInfo);
@@ -120,7 +115,6 @@ public class PassengerServiceImpl implements PassengerService {
        passengerRepository.save(passenger);
 
         Reservation newReservation = reservationService.findByCode(reservationCode);
-        System.out.println(newReservation);
         return newReservation;
     }
 }

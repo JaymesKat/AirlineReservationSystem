@@ -26,7 +26,6 @@ public class Passenger extends User {
 
     public void addReservation(Reservation reservation) {
         if (reservation != null) {
-            System.out.println("Reservation " + reservation);
             reservationList.add(reservation);
         }
     }

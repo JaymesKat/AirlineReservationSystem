@@ -19,10 +19,7 @@ public class Reservation {
     @Column(length = 6)
     private String code;
 
-  //  @OneToMany(mappedBy = "reservation",cascade = CascadeType.PERSIST)
-  //  private List<Ticket> ticketList = new ArrayList<>();
-
-     @OneToMany(mappedBy = "reservation",cascade = CascadeType.PERSIST)
+     @OneToMany(mappedBy = "reservation",cascade = {CascadeType.ALL})
      private List<FlightInfo> flightInfos = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -37,18 +34,6 @@ public class Reservation {
                 ", status=" + status +
                 '}';
     }
-
-    /*public void addTicket(Ticket ticket) {
-        if ( ticket != null)
-            ticketList.add(ticket);
-    }
-    public boolean removeTicket(Ticket ticket){
-        boolean result = false;
-        if(ticket != null){
-            result =  ticketList.remove(ticket);
-        }
-        return result;
-    }*/
 
     public void addFlightInfo(FlightInfo flightInfo) {
         if ( flightInfo != null)
