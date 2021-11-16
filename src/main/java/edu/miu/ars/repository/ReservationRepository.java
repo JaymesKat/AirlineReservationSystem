@@ -11,4 +11,6 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     @Query("from Reservation")
     List<Reservation> findFlightsByAirportCode();
+
+    Reservation findByCode(String reservationCode);
 }

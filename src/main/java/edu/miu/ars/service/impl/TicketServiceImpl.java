@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
+
 @Service
 @Transactional
 public class TicketServiceImpl implements TicketService {
@@ -41,7 +43,7 @@ public class TicketServiceImpl implements TicketService {
             ticketFromDB.setNumber(ticket.getNumber());
             ticketFromDB.setFlightDate(ticket.getFlightDate());
             ticketFromDB.setFlightInfo(ticket.getFlightInfo());
-            ticketFromDB.setReservation(ticket.getReservation());
+          //  ticketFromDB.setReservation(ticket.getReservation());
             save(ticketFromDB);
             return true;
         }
@@ -57,4 +59,5 @@ public class TicketServiceImpl implements TicketService {
         }
         return false;
     }
+
 }

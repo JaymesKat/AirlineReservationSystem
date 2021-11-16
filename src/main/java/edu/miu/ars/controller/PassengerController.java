@@ -1,15 +1,18 @@
 package edu.miu.ars.controller;
 
+import edu.miu.ars.DTO.ReservationDTO;
 import edu.miu.ars.constant.ResponseConstant;
 import edu.miu.ars.domain.Passenger;
+import edu.miu.ars.domain.Reservation;
 import edu.miu.ars.service.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
-@RequestMapping("/passengers")
+@RequestMapping("/api/passengers")
 public class PassengerController {
     private final PassengerService passengerService;
     @Autowired
@@ -48,5 +51,22 @@ public class PassengerController {
         return passengerService.deleteById(id)?ResponseEntity.ok(ResponseConstant.DELETE_SUCCESS):
                 ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
 
+    }
+
+    @GetMapping("/{pid}/reservations")
+    public List<?> reservations(@PathVariable Long pid ){
+        System.out.println("reached");
+        return passengerService.viewListOfReservations(pid);
+    }
+
+    @GetMapping("/{pid}/reservation-details")
+    public List<?> reservationDetails(@PathVariable Long pid){
+        return passengerService.viewReservationDetails(pid);
+    }
+
+    //make-reservation
+    @PostMapping("/{pid}/make-reservation")
+    public Reservation makeReservation(@PathVariable Long pid, @RequestBody ReservationDTO dto){
+      return  passengerService.makeReservation(pid,dto);
     }
 }

@@ -1,22 +1,44 @@
 package edu.miu.ars.service.impl;
 
-import edu.miu.ars.domain.Passenger;
+import edu.miu.ars.DTO.ReservationDTO;
+import edu.miu.ars.domain.*;
 import edu.miu.ars.repository.PassengerRepository;
+import edu.miu.ars.repository.ReservationRepository;
+import edu.miu.ars.service.FlightInfoService;
+import edu.miu.ars.service.FlightService;
 import edu.miu.ars.service.PassengerService;
+import edu.miu.ars.service.ReservationService;
+import edu.miu.ars.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 public class PassengerServiceImpl implements PassengerService {
 
-    @Autowired
     private final PassengerRepository passengerRepository;
+    private final ReservationService reservationService;
+    private final FlightService flightService;
+
     @Autowired
-    public PassengerServiceImpl(PassengerRepository passengerRepository) {
-        this.passengerRepository = passengerRepository;}
+    private FlightInfoService flightInfoService;
+
+    @Autowired
+    public PassengerServiceImpl(
+            PassengerRepository passengerRepository,
+            ReservationService reservationService,
+            FlightService flightService) {
+        this.passengerRepository = passengerRepository;
+        this.reservationService = reservationService;
+        this.flightService = flightService;
+    }
 
     @Override
     public Passenger save(Passenger passenger) {
@@ -55,5 +77,50 @@ public class PassengerServiceImpl implements PassengerService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<?> viewListOfReservations(Long id) {
+        return passengerRepository.viewListOfReservations(id);
+    }
+
+    @Override
+    public List<?> viewReservationDetails(Long id) {
+        return passengerRepository.viewReservationDetails(id);
+    }
+
+
+    @Override
+    public Reservation makeReservation(Long pid,ReservationDTO dto) {
+
+       Reservation reservation = new Reservation();
+       reservation.setStatus(ReservationState.PENDING);
+       String reservationCode = dto.generateCode();
+       reservation.setCode(reservationCode);
+
+       Passenger passenger = findById(pid);
+
+       List<Flight> flights = dto.getFlightNumbers()
+               .stream()
+               .map(flightNumber -> flightService.findByNumber(flightNumber))
+               .collect(Collectors.toList());
+
+       System.out.println("Flights: "+flights);
+
+       List<FlightInfo> flightInfos = flights.stream()
+               .map(flight -> new FlightInfo(flight, DateUtil.parseDate(dto.getDepartureDate())))
+               .collect(Collectors.toList());
+
+        System.out.println("Flight Infos: "+flightInfos);
+
+       for(FlightInfo flightInfo: flightInfos)
+           reservation.addFlightInfo(flightInfo);
+
+       passenger.addReservation(reservation);
+       passengerRepository.save(passenger);
+
+        Reservation newReservation = reservationService.findByCode(reservationCode);
+        System.out.println(newReservation);
+        return newReservation;
     }
 }

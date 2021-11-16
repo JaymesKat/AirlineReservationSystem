@@ -1,5 +1,6 @@
 package edu.miu.ars.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,14 +18,19 @@ import java.util.List;
 @NoArgsConstructor
 public class FlightInfo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     private Flight flight;
 
+    //added
+    @ManyToOne
+    @JsonIgnore
+    private Reservation reservation;
+
     @OneToMany(mappedBy = "flightInfo")
-    private List<Ticket> tickets;
+    private List<Ticket> tickets = new ArrayList<>();
 
     @Temporal(TemporalType.DATE)
     private Date departureDate;
@@ -32,7 +38,6 @@ public class FlightInfo {
     public FlightInfo(Flight flight, Date departureDate) {
         this.flight = flight;
         this.departureDate = departureDate;
-        tickets = new ArrayList<>();
     }
 
     public void addTicket(Ticket ticket){
@@ -44,5 +49,14 @@ public class FlightInfo {
             result = tickets.remove(ticket);
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FlightInfo{" +
+                "flight=" + flight +
+                ", tickets=" + tickets +
+                ", departureDate=" + departureDate +
+                '}';
     }
 }
