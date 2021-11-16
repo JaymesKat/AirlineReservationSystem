@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 @Setter
 @Getter
@@ -22,8 +23,8 @@ public class Ticket {
     @Temporal(TemporalType.DATE)
     private Date flightDate;
 
-    @ManyToOne
-    Reservation reservation;
+  //  @ManyToOne
+  //  Reservation reservation;
 
     @ManyToOne
     FlightInfo flightInfo;

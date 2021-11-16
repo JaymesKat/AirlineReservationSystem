@@ -1,9 +1,12 @@
 package edu.miu.ars.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -14,14 +17,17 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+
 public class Passenger extends User {
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "passenger_id")
+    @JsonIgnore
     private List<Reservation> reservationList = new ArrayList<>();
 
     public void addReservation(Reservation reservation) {
-        if (reservation != null)
+        if (reservation != null) {
             reservationList.add(reservation);
+        }
     }
 
     public boolean removeReservation(Reservation reservation){

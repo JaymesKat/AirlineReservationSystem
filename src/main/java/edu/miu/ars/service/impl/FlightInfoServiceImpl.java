@@ -1,14 +1,17 @@
 package edu.miu.ars.service.impl;
 
 import edu.miu.ars.domain.Airline;
+import edu.miu.ars.domain.Flight;
 import edu.miu.ars.domain.FlightInfo;
 import edu.miu.ars.repository.AirlineRepository;
 import edu.miu.ars.repository.FlightInfoRepository;
 import edu.miu.ars.service.FlightInfoService;
+import edu.miu.ars.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -56,5 +59,12 @@ public class FlightInfoServiceImpl implements FlightInfoService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public FlightInfo createFromFlight(Flight flight, String departureDateStr) {
+        Date departureDate = DateUtil.parseDate(departureDateStr);
+        FlightInfo flightInfo = new FlightInfo(flight, departureDate);
+        return flightInfo;
     }
 }

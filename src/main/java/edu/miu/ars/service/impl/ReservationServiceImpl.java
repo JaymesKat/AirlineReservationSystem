@@ -1,5 +1,6 @@
 package edu.miu.ars.service.impl;
 
+import edu.miu.ars.domain.FlightInfo;
 import edu.miu.ars.domain.Reservation;
 import edu.miu.ars.repository.ReservationRepository;
 import edu.miu.ars.service.ReservationService;
@@ -39,10 +40,11 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservationFromDB = findById(id);
         if(reservationFromDB != null){
             reservationFromDB.setCode(reservation.getCode());
-          //  reservationFromDB.setStatus(reservation.getStatus());
+            reservationFromDB.setStatus(reservation.getStatus());
           //  reservationFromDB.setAgent(reservation.getAgent());
           //  reservationFromDB.setPassenger(reservation.getPassenger());
-            reservationFromDB.setTicketList(reservation.getTicketList());
+          //  reservationFromDB.setTicketList(reservation.getTicketList());
+            reservationFromDB.setFlightInfos(reservation.getFlightInfos());
             save(reservationFromDB);
             return true;
         }
@@ -62,5 +64,10 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<Reservation> findReservationById() {
         return reservationRepository.findFlightsByAirportCode();
+    }
+
+    @Override
+    public Reservation findByCode(String reservationCode) {
+        return reservationRepository.findByCode(reservationCode);
     }
 }

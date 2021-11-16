@@ -66,4 +66,9 @@ public class FlightServiceImpl implements FlightService {
     public List<Flight> findFlightsByAirportCode(String code) {
         return flightRepository.findFlightsByAirportCode(code);
     }
+
+    @Override
+    public Flight findByNumber(String number) {
+        return flightRepository.findByNumber(number);
+    }
 }

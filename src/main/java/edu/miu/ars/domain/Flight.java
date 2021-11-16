@@ -18,18 +18,30 @@ public class Flight {
     private Long id;
     private String number;
     private int capacity;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JsonIgnore
     private Airport origin;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JsonIgnore
     private Airport destination;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="airline_id")
     @JsonIgnore
     private Airline airline;
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "number='" + number + '\'' +
+                ", capacity=" + capacity +
+                ", origin=" + origin +
+                ", destination=" + destination +
+                ", airline=" + airline +
+                ", departureTime=" + departureTime +
+                ", arrivalTime=" + arrivalTime +
+                '}';
+    }
 
     @Temporal(TemporalType.TIME)
     private Date departureTime;

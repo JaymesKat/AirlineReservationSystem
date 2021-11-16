@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ReservationService extends GenericService<Reservation>{
     List<Reservation> findReservationById();
+
+    Reservation findByCode(String reservationCode);
 }

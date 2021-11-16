@@ -12,4 +12,6 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     @Query("select distinct f from Flight f where f.origin.code=:code")
     List<Flight> findFlightsByAirportCode(String code);
+
+    Flight findByNumber(String number);
 }
