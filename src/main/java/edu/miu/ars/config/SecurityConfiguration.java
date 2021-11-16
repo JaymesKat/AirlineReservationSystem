@@ -1,5 +1,6 @@
 package edu.miu.ars.config;
 
+import edu.miu.ars.constant.AppConstant;
 import edu.miu.ars.filter.JwtAuthorizationFilter;
 import edu.miu.ars.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/h2-console/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/**").permitAll()
-                .antMatchers("/api/airports/**").permitAll()
+                .antMatchers("/api/users/**").hasAuthority(AppConstant.ROLE_ADMIN)
+//                .antMatchers("/api/airports/**").permitAll()
                 .antMatchers("/api/flights/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -78,18 +80,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.applyPermitDefaultValues();
-//        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
-//        source.registerCorsConfiguration("/**", corsConfiguration);
-//        //TODO- Narayan Put allow origins in application properties and access from it
-//        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8088"));
-//        corsConfiguration.setAllowCredentials(true);
-//        return source;
-//    }
 
     @Bean
     @Override
