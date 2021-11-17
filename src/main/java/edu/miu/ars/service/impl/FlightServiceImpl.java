@@ -106,6 +106,6 @@ public class FlightServiceImpl implements FlightService {
         flight.setDepartureDate(flightDTO.getDepartureDate());
         flight.setArrivalDate(flightDTO.getArrivalDate());
         Flight insertedFlight = flightRepository.save(flight);
-        return "Flight Successfully added: here is the details " + insertedFlight;
+        return "Flight Successfully added flight " + insertedFlight.getNumber();
     }
 }
