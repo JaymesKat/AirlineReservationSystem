@@ -1,18 +1,18 @@
 package edu.miu.ars.service.impl;
 
-import edu.miu.ars.domain.Airline;
-import edu.miu.ars.domain.Flight;
-import edu.miu.ars.domain.FlightInfo;
-import edu.miu.ars.repository.AirlineRepository;
+import edu.miu.ars.DTO.TicketDTO;
+import edu.miu.ars.domain.*;
 import edu.miu.ars.repository.FlightInfoRepository;
 import edu.miu.ars.service.FlightInfoService;
 import edu.miu.ars.util.DateUtil;
+import edu.miu.ars.util.TicketUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -45,7 +45,7 @@ public class FlightInfoServiceImpl implements FlightInfoService {
         if(updateFlight != null){
             updateFlight.setDepartureDate(flightInfo.getDepartureDate());
             updateFlight.setFlight(flightInfo.getFlight());
-            updateFlight.setTickets(flightInfo.getTickets());
+            updateFlight.setTicket(flightInfo.getTicket());
             save(updateFlight);
         }
         return false;
@@ -66,5 +66,21 @@ public class FlightInfoServiceImpl implements FlightInfoService {
         Date departureDate = DateUtil.parseDate(departureDateStr);
         FlightInfo flightInfo = new FlightInfo(flight, departureDate);
         return flightInfo;
+    }
+
+    @Override
+    public List<TicketDTO> generateTickets(Reservation reservation) {
+
+        List<FlightInfo> flightInfoList = reservation.getFlightInfos();
+
+        List<Ticket> tickets = flightInfoList.stream().map(flightInfo -> {
+            Ticket ticket = new Ticket(TicketUtil.generateNumber(), flightInfo.getDepartureDate());
+            flightInfo.setTicket(ticket);
+            ticket.setFlightInfo(flightInfo);
+            save(flightInfo);
+            return ticket;
+        }).collect(Collectors.toList());
+
+        return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
     }
 }

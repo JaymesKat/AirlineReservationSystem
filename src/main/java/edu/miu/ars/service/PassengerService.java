@@ -9,5 +9,5 @@ import java.util.List;
 public interface PassengerService extends GenericService<Passenger>{
     List<?> viewListOfReservations(Long id);
     List<?> viewReservationDetails(Long id);
-    Reservation makeReservation(Long pid,ReservationDTO dto);
+    Reservation makeReservation(Long pid, ReservationDTO dto);
 }

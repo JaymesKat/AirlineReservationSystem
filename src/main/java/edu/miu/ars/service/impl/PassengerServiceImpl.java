@@ -3,20 +3,15 @@ package edu.miu.ars.service.impl;
 import edu.miu.ars.DTO.ReservationDTO;
 import edu.miu.ars.domain.*;
 import edu.miu.ars.repository.PassengerRepository;
-import edu.miu.ars.repository.ReservationRepository;
 import edu.miu.ars.service.FlightInfoService;
 import edu.miu.ars.service.FlightService;
 import edu.miu.ars.service.PassengerService;
 import edu.miu.ars.service.ReservationService;
-import edu.miu.ars.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -91,7 +86,7 @@ public class PassengerServiceImpl implements PassengerService {
 
 
     @Override
-    public Reservation makeReservation(Long pid,ReservationDTO dto) {
+    public Reservation makeReservation(Long pid, ReservationDTO dto) {
        Reservation reservation = new Reservation();
        reservation.setStatus(ReservationState.PENDING);
        String reservationCode = dto.generateCode();

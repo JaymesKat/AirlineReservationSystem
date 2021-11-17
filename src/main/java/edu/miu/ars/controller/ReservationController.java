@@ -1,5 +1,7 @@
 package edu.miu.ars.controller;
 
+import edu.miu.ars.DTO.ConfirmedReservationDTO;
+import edu.miu.ars.DTO.TicketDTO;
 import edu.miu.ars.constant.ResponseConstant;
 import edu.miu.ars.domain.Reservation;
 import edu.miu.ars.service.ReservationService;
@@ -52,7 +54,18 @@ public class ReservationController {
        return reservationService.deleteById(id) ? ResponseEntity.ok(ResponseConstant.DELETE_SUCCESS)
                : ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
     }
+    @PatchMapping("/{code}/confirm")
+    public ResponseEntity<?> confirmReservation(@PathVariable String code){
+        Reservation reservation = reservationService.findByCode(code);
 
+        if(reservation != null) {
+            ConfirmedReservationDTO confirmedReservation = null;
+            confirmedReservation = reservationService.confirmReservation(reservation);
+            return confirmedReservation!=null ? ResponseEntity.ok().body(confirmedReservation)
+                    : ResponseEntity.badRequest().body(ResponseConstant.RESERVATION_CONFIRMATION_FAILED);
+        }
+        return ResponseEntity.badRequest().body(ResponseConstant.RESERVATION_NOT_FOUND);
+    }
 
 
 }

@@ -24,13 +24,12 @@ public class FlightInfo {
     @ManyToOne(fetch = FetchType.LAZY)
     private Flight flight;
 
-    //added
     @ManyToOne
     @JsonIgnore
     private Reservation reservation;
 
-    @OneToMany(mappedBy = "flightInfo")
-    private List<Ticket> tickets = new ArrayList<>();
+    @OneToOne(mappedBy="flightInfo", cascade = CascadeType.PERSIST)
+    private Ticket ticket;
 
     @Temporal(TemporalType.DATE)
     private Date departureDate;
@@ -40,22 +39,11 @@ public class FlightInfo {
         this.departureDate = departureDate;
     }
 
-    public void addTicket(Ticket ticket){
-        tickets.add(ticket);
-    }
-    public boolean removeTicket(Ticket ticket){
-        boolean result = false;
-        if(ticket != null){
-            result = tickets.remove(ticket);
-        }
-        return result;
-    }
-
     @Override
     public String toString() {
         return "FlightInfo{" +
                // "flight=" + flight +
-                ", tickets=" + tickets +
+                ", ticket=" + ticket +
                 ", departureDate=" + departureDate +
                 '}';
     }
