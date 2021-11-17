@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +49,7 @@ public class FlightController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> save(@RequestBody FlightDTO flight) {
+    public ResponseEntity<?> save(@RequestBody @Valid FlightDTO flight) {
         return ResponseEntity.ok(flightService.saveFlight(flight));
     }
 

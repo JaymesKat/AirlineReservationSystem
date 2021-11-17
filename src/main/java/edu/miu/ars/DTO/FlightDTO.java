@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Setter
@@ -22,10 +24,15 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FlightDTO {
+    @Size(min = 1)
     private String number;
+    @Min(1)
     private int capacity;
+    @Min(1)
     private Long originAirportId;
+    @Min(1)
     private Long destinationAirportId;
+    @Min(1)
     private Long airlineId;
     private Date departureTime;
     private Date arrivalTime;
