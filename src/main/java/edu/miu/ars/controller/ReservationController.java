@@ -28,19 +28,21 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('USER','AGENT')")
     public ResponseEntity<?> findById(@PathVariable Long id, Authentication authentication) {
         return ResponseEntity.ok(reservationService.findDetailOfReservation(appUtil.getFromAuthentication(authentication).getUser().getId(), id));
     }
 
     @GetMapping
-   // @PreAuthorize("hasAnyAuthority(" + AppConstant.ROLE_USER + "," + AppConstant.ROLE_AGENT + ")")
+    @PreAuthorize("hasAnyAuthority('USER','AGENT')")
     public List<Reservation> findAll(Authentication authentication) {
         return reservationService.findListOfReservationOfCurrentLoggedInUser(appUtil.getFromAuthentication(authentication).getUser().getId());
     }
 
     @PostMapping("/by-agent")
-   // @PreAuthorize("hasRole(" + AppConstant.ROLE_AGENT + ")")
+    @PreAuthorize("hasAuthority('AGENT')")
     public ResponseEntity<?> saveByAgent(@RequestBody ReservationDTO reservation, Authentication authentication) {
+        System.out.println(authentication.getAuthorities().toString());
         reservation.setAgentId(appUtil.getFromAuthentication(authentication).getUser().getId());
         reservation.setUserId(appUtil.getFromAuthentication(authentication).getUser().getId());
         return reservationService.saveReservation(reservation, true) != null ? ResponseEntity.ok(ResponseConstant.SAVE_SUCCESS)
@@ -48,7 +50,7 @@ public class ReservationController {
     }
 
     @PostMapping("/by-passenger")
-   // @PreAuthorize("hasAuthority(" + AppConstant.ROLE_USER + ")")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<?> saveByPassenger(@RequestBody ReservationDTO reservation, Authentication authentication) {
         reservation.setUserId(appUtil.getFromAuthentication(authentication).getUser().getId());
         return reservationService.saveReservation(reservation, false) != null ? ResponseEntity.ok(ResponseConstant.SAVE_SUCCESS)
@@ -69,16 +71,19 @@ public class ReservationController {
 
 
     @PatchMapping("/confirm-by-agent/{id}")
+    @PreAuthorize("hasAuthority('AGENT')")
     public ResponseEntity<?> confirmByAgent(Authentication authentication, @PathVariable Long id) {
         return ResponseEntity.ok(reservationService.confirmByAgent(appUtil.getFromAuthentication(authentication).getUser().getId(), id));
     }
 
     @PatchMapping("/confirm-by-passenger/{id}")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<?> confirmByPassenger(Authentication authentication, @PathVariable Long id) {
         return ResponseEntity.ok(reservationService.confirmByPassenger(appUtil.getFromAuthentication(authentication).getUser().getId(), id));
     }
 
     @PatchMapping("/cancelled/{id}")
+    @PreAuthorize("hasAnyAuthority('USER','AGENT')")
     public ResponseEntity<?> cancelledByPassenger(Authentication authentication, @PathVariable Long id) {
         return ResponseEntity.ok(reservationService.cancelledReservation(appUtil.getFromAuthentication(authentication).getUser().getId(), id));
     }

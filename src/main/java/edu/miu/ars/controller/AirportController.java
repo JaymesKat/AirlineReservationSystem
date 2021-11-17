@@ -38,7 +38,7 @@ public class AirportController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority(" + AppConstant.ROLE_ADMIN + ")")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> save(@RequestBody Airport airline) {
         return null != airportService.save(airline) ? ResponseEntity.ok(ResponseConstant.SAVE_SUCCESS) :
                 ResponseEntity.badRequest().body(ResponseConstant.SAVE_FAILED);
@@ -52,7 +52,7 @@ public class AirportController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority(" + AppConstant.ROLE_ADMIN + ")")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Airport airport) {
         if (id.equals(airport.getId())) {
             return airportService.update(airport, id) ? ResponseEntity.ok(ResponseConstant.UPDATE_SUCCESS) :
@@ -62,7 +62,7 @@ public class AirportController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority(" + AppConstant.ROLE_ADMIN + ")")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         return airportService.deleteById(id) ? ResponseEntity.ok(ResponseConstant.DELETE_SUCCESS) :
                 ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);

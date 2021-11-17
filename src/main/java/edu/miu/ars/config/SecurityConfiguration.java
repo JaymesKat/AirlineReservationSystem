@@ -43,16 +43,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/h2-console/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/**").permitAll()
-                .antMatchers("/api/users/**").permitAll()
-//                .antMatchers("/api/airports/**").permitAll()
-                .antMatchers("/api/flights/**").permitAll()
+                .antMatchers("/api/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .logout()
-                .logoutRequestMatcher(
-                        new AntPathRequestMatcher("/login?logout"))
-                .logoutSuccessUrl("/").permitAll()
-                .and().csrf().disable()
+                .csrf().disable()
                 .addFilter(new JwtAuthorizationFilter(authenticationManager()))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
