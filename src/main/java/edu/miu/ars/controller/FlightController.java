@@ -46,7 +46,7 @@ public class FlightController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority(" + AppConstant.ROLE_ADMIN + ")")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> save(@RequestBody Flight airline) {
         return null != flightService.save(airline) ? ResponseEntity.ok(ResponseConstant.SAVE_SUCCESS) :
                 ResponseEntity.badRequest().body(ResponseConstant.SAVE_FAILED);
@@ -60,7 +60,7 @@ public class FlightController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority(" + AppConstant.ROLE_ADMIN + ")")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Flight flight) {
         if (id.equals(flight.getId())) {
             return flightService.update(flight, id) ? ResponseEntity.ok(ResponseConstant.UPDATE_SUCCESS) :
