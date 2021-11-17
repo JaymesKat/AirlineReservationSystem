@@ -3,15 +3,18 @@ package edu.miu.ars.controller;
 import edu.miu.ars.constant.ResponseConstant;
 import edu.miu.ars.domain.Agent;
 import edu.miu.ars.domain.Airline;
+import edu.miu.ars.domain.Passenger;
+import edu.miu.ars.domain.Reservation;
 import edu.miu.ars.service.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/agent")
+@RequestMapping("/api/agents")
 public class AgentController {
 
     private final AgentService agentService;
@@ -53,6 +56,24 @@ public class AgentController {
         return agentService.deleteById(id)?ResponseEntity.ok(ResponseConstant.DELETE_SUCCESS):
                 ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
 
+    }
+
+    @GetMapping("/passangers-and-reservations-for")
+    public ResponseEntity<?> findAllAirlineFlyingFromSpecificAirport(@RequestParam("agentid") Long id) {
+        List<?> passangerReservationlist = new ArrayList<>();
+        if (id != null)
+            passangerReservationlist = agentService.findPassangerForAgent(id);
+        return passangerReservationlist.isEmpty() ? ResponseEntity.badRequest().body(ResponseConstant.NO_AIRLINES_FOUND) :
+                ResponseEntity.ok(passangerReservationlist);
+    }
+
+    @GetMapping("/reservation-details-for")
+    public ResponseEntity<?> findReservationsForAgent(@RequestParam("agentid") Long id) {
+        List<Reservation> reservationlist = new ArrayList<>();
+        if (id != null)
+            reservationlist = agentService.findReservationsForAgent(id);
+        return reservationlist.isEmpty() ? ResponseEntity.badRequest().body(ResponseConstant.NO_AIRLINES_FOUND) :
+                ResponseEntity.ok(reservationlist);
     }
 
 }

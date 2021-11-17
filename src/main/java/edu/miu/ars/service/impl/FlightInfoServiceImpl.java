@@ -1,7 +1,10 @@
 package edu.miu.ars.service.impl;
 
 import edu.miu.ars.DTO.TicketDTO;
-import edu.miu.ars.domain.*;
+import edu.miu.ars.domain.Flight;
+import edu.miu.ars.domain.FlightInfo;
+import edu.miu.ars.domain.Reservation;
+import edu.miu.ars.domain.Ticket;
 import edu.miu.ars.repository.FlightInfoRepository;
 import edu.miu.ars.service.FlightInfoService;
 import edu.miu.ars.util.DateUtil;
@@ -24,6 +27,7 @@ public class FlightInfoServiceImpl implements FlightInfoService {
     public FlightInfoServiceImpl(FlightInfoRepository flightInfoRepository) {
         this.flightInfoRepository = flightInfoRepository;
     }
+
     @Override
     public FlightInfo save(FlightInfo flightInfo) {
         return null != flightInfo ? flightInfoRepository.save(flightInfo) : null;
@@ -42,7 +46,7 @@ public class FlightInfoServiceImpl implements FlightInfoService {
     @Override
     public boolean update(FlightInfo flightInfo, Long id) {
         FlightInfo updateFlight = findById(id);
-        if(updateFlight != null){
+        if (updateFlight != null) {
             updateFlight.setDepartureDate(flightInfo.getDepartureDate());
             updateFlight.setFlight(flightInfo.getFlight());
             updateFlight.setTicket(flightInfo.getTicket());
@@ -62,10 +66,8 @@ public class FlightInfoServiceImpl implements FlightInfoService {
     }
 
     @Override
-    public FlightInfo createFromFlight(Flight flight, String departureDateStr) {
-        Date departureDate = DateUtil.parseDate(departureDateStr);
-        FlightInfo flightInfo = new FlightInfo(flight, departureDate);
-        return flightInfo;
+    public List<Flight> findFlightsForDate(String originCode, String destinationCode, Date date) {
+        return flightInfoRepository.findFlightsForDate(originCode, destinationCode, date);
     }
 
     @Override
@@ -83,4 +85,9 @@ public class FlightInfoServiceImpl implements FlightInfoService {
 
         return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
     }
+        public FlightInfo createFromFlight(Flight flight, String departureDateStr) {
+            Date departureDate = DateUtil.parseDate(departureDateStr);
+            FlightInfo flightInfo = new FlightInfo(flight, departureDate);
+            return flightInfo;
+        }
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Flight {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String number;
     private int capacity;
@@ -26,8 +26,7 @@ public class Flight {
     private Airport destination;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="airline_id")
-    @JsonIgnore
+    @JoinColumn(name = "airline_id")
     private Airline airline;
 
     @Override
@@ -48,19 +47,36 @@ public class Flight {
     @Temporal(TemporalType.TIME)
     private Date arrivalTime;
 
-    public Flight(String number, int capacity, Airport departure, Airport arrival, Date departureTime, Date arrivalTime) {
+    @Temporal(TemporalType.DATE)
+    private Date departureDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date arrivalDate;
+
+    public Flight(String number, int capacity, Airport departure, Airport arrival, Date departureTime, Date arrivalTime, Date departureDate, Date arrivalDate) {
         this.number = number;
         this.capacity = capacity;
         this.origin = departure;
         this.destination = arrival;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
     }
 
-    public Flight(String number, int capacity, Date departureTime, Date arrivalTime) {
+    public Flight(String number, int capacity, Date departureTime, Date arrivalTime, Date arrivalDate, Date departureDate) {
         this.number = number;
         this.capacity = capacity;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
+    }
+
+    public Flight(String number, int capacity, Date arrivalDate, Date departureDate) {
+        this.number=number;
+        this.capacity=capacity;
+        this.arrivalDate=arrivalDate;
+        this.departureDate=departureDate;
     }
 }

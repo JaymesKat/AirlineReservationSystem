@@ -1,6 +1,7 @@
 package edu.miu.ars.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,8 +24,9 @@ public class Airline {
     private String name;
     @Column(table = "history", length = 2000)
     private String history;
-    @OneToMany(mappedBy="airline",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="airline")
     @OrderBy("departureTime desc")
+    @JsonIgnore
     private List<Flight> flights;
 
     public Airline(String code, String name, String history) {

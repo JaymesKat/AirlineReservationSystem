@@ -1,7 +1,6 @@
 package edu.miu.ars.controller;
 
 import edu.miu.ars.DTO.ConfirmedReservationDTO;
-import edu.miu.ars.DTO.TicketDTO;
 import edu.miu.ars.constant.ResponseConstant;
 import edu.miu.ars.domain.Reservation;
 import edu.miu.ars.service.ReservationService;
@@ -22,16 +21,16 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
+    @GetMapping
+    public List<Reservation> findAll(){
+        return reservationService.findAll();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id){
         Reservation reservation = reservationService.findById(id);
         return reservation != null ? ResponseEntity.ok(reservation) :
                 ResponseEntity.badRequest().body(ResponseConstant.NOT_FOUND);
-    }
-
-    @GetMapping
-    public List<Reservation> findAll(){
-        return reservationService.findAll();
     }
 
     @PostMapping
@@ -55,17 +54,22 @@ public class ReservationController {
                : ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
     }
     @PatchMapping("/{code}/confirm")
-    public ResponseEntity<?> confirmReservation(@PathVariable String code){
+    public ResponseEntity<?> confirmReservation(@PathVariable String code) {
         Reservation reservation = reservationService.findByCode(code);
 
-        if(reservation != null) {
+        if (reservation != null) {
             ConfirmedReservationDTO confirmedReservation = null;
             confirmedReservation = reservationService.confirmReservation(reservation);
-            return confirmedReservation!=null ? ResponseEntity.ok().body(confirmedReservation)
+            return confirmedReservation != null ? ResponseEntity.ok().body(confirmedReservation)
                     : ResponseEntity.badRequest().body(ResponseConstant.RESERVATION_CONFIRMATION_FAILED);
         }
         return ResponseEntity.badRequest().body(ResponseConstant.RESERVATION_NOT_FOUND);
     }
 
+    @PatchMapping ("/{reservationCode}/cancel")
+    public ResponseEntity<?> cancelReservation(@PathVariable String reservationCode){
 
+       return reservationService.cancelReservation(reservationCode)?ResponseEntity.ok(ResponseConstant.CANCEL_SUCCESS)
+               : ResponseEntity.badRequest().body(ResponseConstant.CANCEL_FAILED);
+    }
 }

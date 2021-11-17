@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,6 +36,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> findAll() {
+        System.out.println("Reached at this point: "+reservationRepository.findById(1L));
         return reservationRepository.findAll();
     }
 
@@ -43,6 +45,11 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public Reservation findByCode(String reservationCode) {
+        return reservationRepository.findByCode(reservationCode);
+
+    }
     @Override
     public boolean update(Reservation reservation, Long id) {
         Reservation reservationFromDB = findById(id);
@@ -68,15 +75,26 @@ public class ReservationServiceImpl implements ReservationService {
         }
         return false;
     }
-
+    @Override
+    public ReservationState deleteByCode(String reservationCode) {
+        Reservation reservation = findByCode(reservationCode);
+        if(reservation != null)
+            reservationRepository.delete(reservation);
+        return ReservationState.CANCELLED;
+    }
     @Override
     public List<Reservation> findReservationById() {
         return reservationRepository.findFlightsByAirportCode();
     }
 
     @Override
-    public Reservation findByCode(String reservationCode) {
-        return reservationRepository.findByCode(reservationCode);
+    public boolean cancelReservation(String reservationCode) {
+        Reservation reservation = findByCode(reservationCode);
+        if (reservation != null) {
+            reservation.setStatus(ReservationState.CANCELLED);
+            return true;
+        }
+        return false;
     }
 
     @Override
