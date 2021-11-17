@@ -2,6 +2,7 @@ package edu.miu.ars.repository;
 
 import edu.miu.ars.domain.Flight;
 import edu.miu.ars.domain.Reservation;
+import edu.miu.ars.domain.Ticket;
 import edu.miu.ars.enums.ReservationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("select r from Reservation r where r.emailSend=false and r.status= :reservationStatus")
     List<Reservation> findAllFromReservationStatusAndEmailIsNotSend(ReservationStatus reservationStatus);
+
+    @Query("select r.ticketList from Reservation r where r.id=:reservationId ")
+    List<Ticket> findAllTicketOfReservation(Long reservationId);
 }

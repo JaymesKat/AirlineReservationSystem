@@ -88,5 +88,9 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.cancelledReservation(appUtil.getFromAuthentication(authentication).getUser().getId(), id));
     }
 
+    @GetMapping("/{id}/tickets")
+    public ResponseEntity<?> getAllTicketsOfReservation(Authentication authentication, @PathVariable Long id) {
+        return ResponseEntity.ok(reservationService.getAllTicketsOfReservation(appUtil.getFromAuthentication(authentication).getUser().getId(), id));
+    }
 
 }

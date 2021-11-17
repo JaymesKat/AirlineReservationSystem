@@ -183,6 +183,15 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.findDetailOfReservation(loggedInUserId, reservationId);
     }
 
+    @Override
+    public List<Ticket> getAllTicketsOfReservation(Long loggedInUserId, Long reservationId) {
+        Reservation reservation= findById(reservationId);
+        if(null==reservation || !loggedInUserId.equals(reservation.getCreatedBy().getId())){
+            throw new BadClientException("This Reservation doesnot belongs to you");
+        }
+        return reservationRepository.findAllTicketOfReservation(reservationId);
+    }
+
 
     private Passenger copyPassengerDTO(PassengerDTO passengerDTO) {
         Passenger passenger = new Passenger();
