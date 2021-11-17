@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("/tickets")
 public class TicketController {
 
-
     private final TicketService ticketService;
     @Autowired
     public TicketController(TicketService ticketService) {
@@ -31,27 +30,6 @@ public class TicketController {
     @GetMapping
     public List<Ticket> findAll(){
         return ticketService.findAll();
-    }
-
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody Ticket ticket){
-        return ticketService.save(ticket) != null ? ResponseEntity.ok(ResponseConstant.SAVE_SUCCESS)
-                : ResponseEntity.badRequest().body(ResponseConstant.SAVE_FAILED);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody Ticket ticket){
-        if(id.equals(ticket.getId())){
-            return ticketService.update(ticket, id) ? ResponseEntity.ok(ResponseConstant.UPDATE_SUCCESS)
-                    : ResponseEntity.badRequest().body(ResponseConstant.UPDATE_FAILED);
-        }
-        return ResponseEntity.badRequest().build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable long id){
-        return ticketService.deleteById(id) ? ResponseEntity.ok(ResponseConstant.DELETE_SUCCESS)
-                : ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
     }
 
 }

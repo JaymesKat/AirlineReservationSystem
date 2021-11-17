@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.support.RequestDataValueProcessor;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableScheduling
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final AppUserService appUserService;
@@ -41,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/h2-console/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/**").permitAll()
-                .antMatchers("/api/users/**").hasAuthority(AppConstant.ROLE_ADMIN)
+                .antMatchers("/api/users/**").permitAll()
 //                .antMatchers("/api/airports/**").permitAll()
                 .antMatchers("/api/flights/**").permitAll()
                 .anyRequest().authenticated()

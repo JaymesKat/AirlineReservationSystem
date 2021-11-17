@@ -1,6 +1,9 @@
 package edu.miu.ars.service.impl;
 
+import edu.miu.ars.constant.AppConstant;
+import edu.miu.ars.domain.Agent;
 import edu.miu.ars.domain.AppUser;
+import edu.miu.ars.domain.Passenger;
 import edu.miu.ars.repository.AppUserRepository;
 import edu.miu.ars.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,25 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public AppUser save(AppUser appUser) {
+        edu.miu.ars.domain.User user = appUser.getUser();
+        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
+        if (appUser.getRole().equals(AppConstant.ROLE_AGENT)) {
+            Agent agent = new Agent();
+            agent.setEmail(user.getEmail());
+            agent.setAddress(user.getAddress());
+            agent.setFirstName(user.getFirstName());
+            agent.setLastName(user.getLastName());
+            agent.setDateOfBirth(user.getDateOfBirth());
+            appUser.setUser(agent);
+        } else if (appUser.getRole().equals(AppConstant.ROLE_USER)) {
+            Passenger passenger = new Passenger();
+            passenger.setEmail(user.getEmail());
+            passenger.setAddress(user.getAddress());
+            passenger.setFirstName(user.getFirstName());
+            passenger.setLastName(user.getLastName());
+            passenger.setDateOfBirth(user.getDateOfBirth());
+            appUser.setUser(passenger);
+        }
         return appUserRepository.save(appUser);
     }
 

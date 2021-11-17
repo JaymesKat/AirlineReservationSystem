@@ -21,10 +21,8 @@ public class Ticket {
     private Date flightDate;
 
     @ManyToOne
-    Reservation reservation;
+    private Reservation reservation;
 
-    @ManyToOne
-    FlightInfo flightInfo;
 
     public Ticket(String number, Date flightDate) {
         this.number = number;

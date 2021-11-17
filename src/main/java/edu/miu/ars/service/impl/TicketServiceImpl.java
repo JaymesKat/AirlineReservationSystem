@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 @Service
 @Transactional
@@ -40,7 +41,6 @@ public class TicketServiceImpl implements TicketService {
         if(ticketFromDB != null){
             ticketFromDB.setNumber(ticket.getNumber());
             ticketFromDB.setFlightDate(ticket.getFlightDate());
-            ticketFromDB.setFlightInfo(ticket.getFlightInfo());
             ticketFromDB.setReservation(ticket.getReservation());
             save(ticketFromDB);
             return true;

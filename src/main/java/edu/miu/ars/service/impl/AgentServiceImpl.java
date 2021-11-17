@@ -43,7 +43,6 @@ public class AgentServiceImpl implements AgentService {
             agentFromDB.setDateOfBirth(agent.getDateOfBirth());
             agentFromDB.setEmail(agent.getEmail());
             agentFromDB.setAddress(agent.getAddress());
-            agentFromDB.setPassengerList(agent.getPassengerList());
             save(agentFromDB);
             return true;
         }

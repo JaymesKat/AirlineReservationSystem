@@ -1,5 +1,6 @@
 package edu.miu.ars.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,8 +15,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Passenger extends User {
+
     @OneToMany
     private List<Reservation> reservationList = new ArrayList<>();
+
 
     public void addReservation(Reservation reservation) {
         if (reservation != null)
