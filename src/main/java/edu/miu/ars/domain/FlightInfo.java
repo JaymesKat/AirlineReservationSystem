@@ -30,7 +30,7 @@ public class FlightInfo {
     private Reservation reservation;
 
     @OneToOne(mappedBy = "flightInfo")
-    private Ticket tickets;
+    private Ticket ticket;
 
     @Temporal(TemporalType.DATE)
     private Date departureDate;

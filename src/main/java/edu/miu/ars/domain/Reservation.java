@@ -18,6 +18,10 @@ public class Reservation {
     private Long id;
     @Column(length = 6)
     private String code;
+    private FlightNotification flightNotification;
+
+  @ManyToOne
+   private Passenger passenger;
 
     @OneToMany(mappedBy = "reservation")
     private List<FlightInfo> flightInfos = new ArrayList<>();
