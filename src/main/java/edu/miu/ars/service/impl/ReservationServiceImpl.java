@@ -27,6 +27,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> findAll() {
+        System.out.println("Reached at this point: "+reservationRepository.findById(1L));
         return reservationRepository.findAll();
     }
 

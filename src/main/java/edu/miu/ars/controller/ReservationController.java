@@ -20,6 +20,11 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
+    @GetMapping
+    public List<Reservation> findAll(){
+        return reservationService.findAll();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id){
         Reservation reservation = reservationService.findById(id);
@@ -27,10 +32,6 @@ public class ReservationController {
                 ResponseEntity.badRequest().body(ResponseConstant.NOT_FOUND);
     }
 
-    @GetMapping
-    public List<Reservation> findAll(){
-        return reservationService.findAll();
-    }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Reservation reservation){
