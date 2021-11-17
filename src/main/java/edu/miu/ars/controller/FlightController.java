@@ -71,7 +71,7 @@ public class FlightController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority(" + AppConstant.ROLE_ADMIN + ")")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         return flightService.deleteById(id) ? ResponseEntity.ok(ResponseConstant.DELETE_SUCCESS) :
                 ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
