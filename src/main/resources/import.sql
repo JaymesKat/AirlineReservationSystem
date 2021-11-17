@@ -119,6 +119,11 @@ INSERT INTO flight_info (id, departure_date, flight_id,reservation_id) VALUES(8,
 INSERT INTO flight_info (id, departure_date, flight_id,reservation_id) VALUES(9, '2021-11-25', 9,1);
 INSERT INTO flight_info (id, departure_date, flight_id,reservation_id) VALUES(10, '2021-11-19', 10,1);
 
+INSERT INTO agent_passenger_list (passenger_list_id, agent_id) VALUES (4, 6);
+INSERT INTO agent_passenger_list (passenger_list_id, agent_id) VALUES (3, 5);
+INSERT INTO agent_passenger_list (passenger_list_id, agent_id) VALUES (1, 6);
+INSERT INTO agent_passenger_list (passenger_list_id, agent_id) VALUES (2, 5);
+
 -- INSERT INTO ticket (id, flight_date, number, flight_info_id ) VALUES (1, '2021-11-14', '9636948949', 1);
 -- INSERT INTO ticket (id, flight_date, number, flight_info_id ) VALUES (2, '2021-11-14', '7663673815', 2);
 -- INSERT INTO ticket (id, flight_date, number, flight_info_id ) VALUES (3, '2021-11-14', '3407539885', 3);

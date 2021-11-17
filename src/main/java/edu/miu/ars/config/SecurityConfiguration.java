@@ -1,6 +1,5 @@
 package edu.miu.ars.config;
 
-import edu.miu.ars.constant.AppConstant;
 import edu.miu.ars.filter.JwtAuthorizationFilter;
 import edu.miu.ars.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import org.springframework.web.servlet.support.RequestDataValueProcessor;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
     private final AppUserService appUserService;
 
     @Autowired
@@ -41,23 +39,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/h2-console/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/**").permitAll()
-
                 .antMatchers("/api/airports/**").permitAll()
-                .antMatchers("/api/flights/**").permitAll()
-                .antMatchers("/api/agents/**").permitAll()
-                .antMatchers("/api/flightInfo/**/**").permitAll()
-                .antMatchers("/api/reservations/**").permitAll()
-                .antMatchers("/api/users/**").hasAuthority(AppConstant.ROLE_ADMIN)
-                .antMatchers("/api/airports/**").permitAll()
-
-
                 //added for the sake of practice
                 .antMatchers("/api/flights/**").permitAll()
                 .antMatchers("/api/flight-info/**").permitAll()
                 .antMatchers("/api/passengers/**").permitAll()
                 .antMatchers("/api/reservations/**").permitAll()
                 .antMatchers("/api/tickets/**").permitAll()
-
+                .antMatchers("/api/agents/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
@@ -82,11 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //TODO:Narayan - Remove inmemory auth after everything done
         auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("admin"))
                 .roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("passenger").password(passwordEncoder().encode("passenger"))
-                .roles("USER");
-        auth.inMemoryAuthentication().withUser("agent").password(passwordEncoder().encode("agent"))
-                .roles("AGENT");
-        auth.userDetailsService(appUserService);
+       // auth.userDetailsService(appUserService);
     }
 
     @Bean
@@ -94,6 +79,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//        corsConfiguration.applyPermitDefaultValues();
+//        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
+//        source.registerCorsConfiguration("/**", corsConfiguration);
+//        //TODO- Narayan Put allow origins in application properties and access from it
+//        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8088"));
+//        corsConfiguration.setAllowCredentials(true);
+//        return source;
+//    }
 
     @Bean
     @Override

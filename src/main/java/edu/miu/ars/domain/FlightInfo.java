@@ -30,8 +30,7 @@ public class FlightInfo {
     private Reservation reservation;
 
     @OneToOne(mappedBy = "flightInfo")
-    @JsonIgnore
-    private Ticket ticket;
+    private Ticket tickets;
 
     @Temporal(TemporalType.DATE)
     private Date departureDate;
@@ -41,12 +40,23 @@ public class FlightInfo {
         this.departureDate = departureDate;
     }
 
-    @Override
+    /*public void addTicket(Ticket ticket){
+        tickets.add(ticket);
+    }
+    public boolean removeTicket(Ticket ticket){
+        boolean result = false;
+        if(ticket != null){
+            result = tickets.remove(ticket);
+        }
+        return result;
+    }*/
+
+    /*@Override
     public String toString() {
         return "FlightInfo{" +
                // "flight=" + flight +
-                ", ticket=" + ticket +
+                ", tickets=" + tickets +
                 ", departureDate=" + departureDate +
                 '}';
-    }
+    }*/
 }

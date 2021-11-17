@@ -1,9 +1,7 @@
 package edu.miu.ars.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +19,7 @@ public class Reservation {
     @Column(length = 6)
     private String code;
 
-
-    @OneToMany(mappedBy = "reservation",cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "reservation")
     private List<FlightInfo> flightInfos = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -42,6 +39,7 @@ public class Reservation {
         return result;
     }
 
+
     @Override
     public String toString() {
         return "Reservation{" +
@@ -50,5 +48,6 @@ public class Reservation {
                 ", status=" + status +
                 '}';
     }
+
 
 }
