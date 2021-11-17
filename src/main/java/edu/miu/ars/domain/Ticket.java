@@ -26,7 +26,7 @@ public class Ticket {
   //  @ManyToOne
   //  Reservation reservation;
 
-    @ManyToOne
+    @OneToOne
     FlightInfo flightInfo;
 
     public Ticket(String number, Date flightDate) {

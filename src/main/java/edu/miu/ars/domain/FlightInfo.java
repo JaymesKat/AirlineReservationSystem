@@ -29,8 +29,8 @@ public class FlightInfo {
     @JsonIgnore
     private Reservation reservation;
 
-    @OneToMany(mappedBy = "flightInfo")
-    private List<Ticket> tickets = new ArrayList<>();
+    @OneToOne(mappedBy = "flightInfo")
+    private Ticket tickets;
 
     @Temporal(TemporalType.DATE)
     private Date departureDate;
@@ -40,7 +40,7 @@ public class FlightInfo {
         this.departureDate = departureDate;
     }
 
-    public void addTicket(Ticket ticket){
+    /*public void addTicket(Ticket ticket){
         tickets.add(ticket);
     }
     public boolean removeTicket(Ticket ticket){
@@ -49,7 +49,7 @@ public class FlightInfo {
             result = tickets.remove(ticket);
         }
         return result;
-    }
+    }*/
 
     @Override
     public String toString() {
