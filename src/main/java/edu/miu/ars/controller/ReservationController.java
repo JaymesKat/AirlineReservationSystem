@@ -54,6 +54,13 @@ public class ReservationController {
                : ResponseEntity.badRequest().body(ResponseConstant.DELETE_FAILED);
     }
 
+    @PatchMapping ("/{reservationCode}/cancel")
+    public ResponseEntity<?> cancelReservation(@PathVariable String reservationCode){
+
+       return reservationService.cancelReservation(reservationCode)?ResponseEntity.ok(ResponseConstant.CANCEL_SUCCESS)
+               : ResponseEntity.badRequest().body(ResponseConstant.CANCEL_FAILED);
+
+    }
 
 
 }

@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 @Transactional
 public class FlightServiceImpl implements FlightService {
-    
+
     private final FlightRepository flightRepository;
 
     @Autowired
@@ -68,7 +69,12 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+
+    public List<Flight> findListOfFlightBetweenDepartureAndDestinationForDate(String originCode, String destinationCode, Date date) {
+        return flightRepository.findListOfFlightBetweenDepartureAndDestinationForDate(originCode, destinationCode, date);
+    }
     public Flight findByNumber(String number) {
         return flightRepository.findByNumber(number);
+
     }
 }

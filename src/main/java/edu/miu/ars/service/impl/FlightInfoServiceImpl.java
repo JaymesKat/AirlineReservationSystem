@@ -1,6 +1,7 @@
 package edu.miu.ars.service.impl;
 
 import edu.miu.ars.domain.Airline;
+import edu.miu.ars.domain.Airport;
 import edu.miu.ars.domain.Flight;
 import edu.miu.ars.domain.FlightInfo;
 import edu.miu.ars.repository.AirlineRepository;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -24,6 +26,7 @@ public class FlightInfoServiceImpl implements FlightInfoService {
     public FlightInfoServiceImpl(FlightInfoRepository flightInfoRepository) {
         this.flightInfoRepository = flightInfoRepository;
     }
+
     @Override
     public FlightInfo save(FlightInfo flightInfo) {
         return null != flightInfo ? flightInfoRepository.save(flightInfo) : null;
@@ -42,10 +45,10 @@ public class FlightInfoServiceImpl implements FlightInfoService {
     @Override
     public boolean update(FlightInfo flightInfo, Long id) {
         FlightInfo updateFlight = findById(id);
-        if(updateFlight != null){
+        if (updateFlight != null) {
             updateFlight.setDepartureDate(flightInfo.getDepartureDate());
             updateFlight.setFlight(flightInfo.getFlight());
-            updateFlight.setTickets(flightInfo.getTickets());
+            updateFlight.setTicket(flightInfo.getTicket());
             save(updateFlight);
         }
         return false;
@@ -62,9 +65,16 @@ public class FlightInfoServiceImpl implements FlightInfoService {
     }
 
     @Override
-    public FlightInfo createFromFlight(Flight flight, String departureDateStr) {
-        Date departureDate = DateUtil.parseDate(departureDateStr);
-        FlightInfo flightInfo = new FlightInfo(flight, departureDate);
-        return flightInfo;
+
+    public List<Flight> findFlightsForDate(String originCode, String destinationCode, Date date) {
+        return flightInfoRepository.findFlightsForDate(originCode, destinationCode, date);
+        //return flightInfoRepository.findFlightsForDate(date);
     }
+        public FlightInfo createFromFlight(Flight flight, String departureDateStr) {
+            Date departureDate = DateUtil.parseDate(departureDateStr);
+            FlightInfo flightInfo = new FlightInfo(flight, departureDate);
+            return flightInfo;
+        }
+//
+
 }

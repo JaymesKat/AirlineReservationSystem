@@ -4,6 +4,11 @@ import edu.miu.ars.domain.AppUser;
 import edu.miu.ars.repository.AppUserRepository;
 import edu.miu.ars.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,34 +19,44 @@ import java.util.List;
 @Transactional
 public class AppUserServiceImpl implements AppUserService {
     private final AppUserRepository appUserRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AppUserServiceImpl(AppUserRepository appUserRepository) {
+    public AppUserServiceImpl(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
         this.appUserRepository = appUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public AppUser getByEmail(String email) {
-        return null;
+        return appUserRepository.findByEmail(email);
     }
 
     @Override
     public AppUser save(AppUser appUser) {
-        return null;
+        return appUserRepository.save(appUser);
     }
 
     @Override
     public List<AppUser> findAll() {
-        return null;
+        return appUserRepository.findAll();
     }
 
     @Override
     public AppUser findById(Long id) {
-        return null;
+        return appUserRepository.findById(id).orElse(null);
     }
 
     @Override
     public boolean update(AppUser appUser, Long id) {
+        AppUser appUserFromDB = findById(id);
+        if (null != appUserFromDB) {
+            appUserFromDB.setUser(appUser.getUser());
+            appUserFromDB.setEmail(appUser.getEmail());
+            appUserFromDB.setPassword(passwordEncoder.encode(appUser.getPassword()));
+            appUserFromDB.setRole(appUser.getRole());
+            save(appUserFromDB);
+        }
         return false;
     }
 
@@ -50,4 +65,9 @@ public class AppUserServiceImpl implements AppUserService {
         return false;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        AppUser user = getByEmail(email);
+        return new User(user.getEmail(), user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole()));
+    }
 }
