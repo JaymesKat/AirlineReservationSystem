@@ -1,5 +1,6 @@
 package edu.miu.ars.controller;
 
+import edu.miu.ars.DTO.FlightDTO;
 import edu.miu.ars.constant.AppConstant;
 import edu.miu.ars.constant.ResponseConstant;
 import edu.miu.ars.domain.Address;
@@ -47,9 +48,8 @@ public class FlightController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> save(@RequestBody Flight airline) {
-        return null != flightService.save(airline) ? ResponseEntity.ok(ResponseConstant.SAVE_SUCCESS) :
-                ResponseEntity.badRequest().body(ResponseConstant.SAVE_FAILED);
+    public ResponseEntity<?> save(@RequestBody FlightDTO flight) {
+        return ResponseEntity.ok(flightService.saveFlight(flight));
     }
 
     @GetMapping("/{id}")
@@ -93,16 +93,16 @@ public class FlightController {
         Airport a2 = new Airport("ORD", "Chicago", new Address("Street1", "City1", "Zip1", "State1"));
         Airport a3 = new Airport("DMS", "De Moiens", new Address("Street", "City", "Zip", "State"));
         Airport a4 = new Airport("NPL", "Kathmandu", new Address("Street1", "City1", "Zip1", "State1"));
-        Airline airline = new Airline("CD", "name", "history dshfkjsd");
-        Airline airline2 = new Airline("UA", "UA", "history of UA");
+        Airline flight = new Airline("CD", "name", "history dshfkjsd");
+        Airline flight2 = new Airline("UA", "UA", "history of UA");
 
         f1.setOrigin(a1);
         f1.setDestination(a2);
-        f1.setAirline(airline);
+        f1.setAirline(flight);
 
         f2.setOrigin(a4);
         f2.setDestination(a3);
-        f2.setAirline(airline2);
+        f2.setAirline(flight2);
 
         flightService.save(f1);
         flightService.save(f2);
