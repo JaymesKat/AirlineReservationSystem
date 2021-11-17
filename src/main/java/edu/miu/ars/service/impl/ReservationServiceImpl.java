@@ -1,10 +1,12 @@
 package edu.miu.ars.service.impl;
-import edu.miu.ars.domain.Flight;
-import edu.miu.ars.domain.FlightInfo;
+
+import edu.miu.ars.DTO.ConfirmedReservationDTO;
+import edu.miu.ars.DTO.TicketDTO;
 import edu.miu.ars.domain.Reservation;
 import edu.miu.ars.domain.ReservationState;
-import edu.miu.ars.domain.Ticket;
+import edu.miu.ars.exception.OperationFailedException;
 import edu.miu.ars.repository.ReservationRepository;
+import edu.miu.ars.service.FlightInfoService;
 import edu.miu.ars.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ import java.util.stream.Collectors;
 @Transactional
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
+
+    @Autowired
+    private FlightInfoService flightInfoService;
+
     @Autowired
     public ReservationServiceImpl(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
@@ -38,9 +44,9 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation findById(Long id) {
         return reservationRepository.findById(id).orElse(null);
     }
+
     @Override
     public Reservation findByCode(String reservationCode) {
-
         return reservationRepository.findByCode(reservationCode);
 
     }
@@ -82,7 +88,6 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-
     public boolean cancelReservation(String reservationCode) {
         Reservation reservation = findByCode(reservationCode);
         if (reservation != null) {
@@ -92,7 +97,19 @@ public class ReservationServiceImpl implements ReservationService {
         return false;
     }
 
-    //public Reservation findByCode(String reservationCode) {
-    //    return reservationRepository.findByCode(reservationCode);}
+    @Override
+    public ConfirmedReservationDTO confirmReservation(Reservation reservation) {
+        if(reservation.getStatus() != ReservationState.PENDING){
+            throw new OperationFailedException("Failed to confirm Reservation in state: " + reservation.getStatus());
+        }
+
+        reservation.setStatus(ReservationState.CONFIRMED);
+        List<TicketDTO> tickets = flightInfoService.generateTickets(reservation);
+        save(reservation);
+
+        ConfirmedReservationDTO confirmedReservation = new ConfirmedReservationDTO(
+                reservation.getCode(), reservation.getStatus(), tickets);
+        return confirmedReservation;
+    }
 
 }

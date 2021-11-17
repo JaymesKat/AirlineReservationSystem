@@ -24,13 +24,12 @@ public class FlightInfo {
     @ManyToOne
     private Flight flight;
 
-    //added
     @ManyToOne
     @JsonIgnore
     private Reservation reservation;
 
-    @OneToOne(mappedBy = "flightInfo")
-    private Ticket tickets;
+    @OneToOne(mappedBy="flightInfo", cascade = CascadeType.PERSIST)
+    private Ticket ticket;
 
     @Temporal(TemporalType.DATE)
     private Date departureDate;
@@ -40,23 +39,12 @@ public class FlightInfo {
         this.departureDate = departureDate;
     }
 
-    /*public void addTicket(Ticket ticket){
-        tickets.add(ticket);
-    }
-    public boolean removeTicket(Ticket ticket){
-        boolean result = false;
-        if(ticket != null){
-            result = tickets.remove(ticket);
-        }
-        return result;
-    }*/
-
-    /*@Override
+    @Override
     public String toString() {
         return "FlightInfo{" +
-               // "flight=" + flight +
-                ", tickets=" + tickets +
+                "flight=" + flight +
+                ", ticket=" + ticket +
                 ", departureDate=" + departureDate +
                 '}';
-    }*/
+    }
 }
