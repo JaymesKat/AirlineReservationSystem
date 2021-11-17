@@ -17,4 +17,6 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     @Query("select distinct f from Flight f where f.origin.code= :originCode and f.destination.code= :destinationCode and f.departureDate= :date")
     List<Flight> findListOfFlightBetweenDepartureAndDestinationForDate(String originCode, String destinationCode, Date date);
 
+    Flight findByNumber(String number);
+
 }

@@ -18,15 +18,20 @@ import java.util.List;
 @NoArgsConstructor
 public class FlightInfo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Flight flight;
 
-    @OneToMany(mappedBy = "flightInfo")
+    //added
+    @ManyToOne
     @JsonIgnore
-    private List<Ticket> tickets;
+    private Reservation reservation;
+
+    @OneToOne(mappedBy = "flightInfo")
+    @JsonIgnore
+    private Ticket ticket;
 
     @Temporal(TemporalType.DATE)
     private Date departureDate;
@@ -34,17 +39,14 @@ public class FlightInfo {
     public FlightInfo(Flight flight, Date departureDate) {
         this.flight = flight;
         this.departureDate = departureDate;
-        tickets = new ArrayList<>();
     }
 
-    public void addTicket(Ticket ticket){
-        tickets.add(ticket);
-    }
-    public boolean removeTicket(Ticket ticket){
-        boolean result = false;
-        if(ticket != null){
-            result = tickets.remove(ticket);
-        }
-        return result;
+    @Override
+    public String toString() {
+        return "FlightInfo{" +
+               // "flight=" + flight +
+                ", ticket=" + ticket +
+                ", departureDate=" + departureDate +
+                '}';
     }
 }

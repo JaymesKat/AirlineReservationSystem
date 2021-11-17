@@ -12,4 +12,7 @@ import edu.miu.ars.domain.FlightInfo;
 
 public interface FlightInfoService extends GenericService<FlightInfo> {
     List<Flight> findFlightsForDate(String originCode, String destinationCode, Date date);
+
+    FlightInfo createFromFlight(Flight flight, String dateString);
+
 }

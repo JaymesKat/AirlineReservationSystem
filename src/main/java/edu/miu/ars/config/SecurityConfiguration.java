@@ -49,7 +49,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/reservations/**").permitAll()
                 .antMatchers("/api/users/**").hasAuthority(AppConstant.ROLE_ADMIN)
                 .antMatchers("/api/airports/**").permitAll()
+
+
+                //added for the sake of practice
                 .antMatchers("/api/flights/**").permitAll()
+                .antMatchers("/api/flight-info/**").permitAll()
+                .antMatchers("/api/passengers/**").permitAll()
+                .antMatchers("/api/reservations/**").permitAll()
+                .antMatchers("/api/tickets/**").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .logout()

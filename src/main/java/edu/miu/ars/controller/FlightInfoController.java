@@ -18,7 +18,9 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/flightInfo")
+
+@RequestMapping("/api/flight-info")
+
 public class FlightInfoController {
 
     private final FlightInfoService flightInfoService;

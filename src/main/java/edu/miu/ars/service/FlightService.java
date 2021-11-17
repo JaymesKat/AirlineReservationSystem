@@ -12,4 +12,7 @@ public interface FlightService extends GenericService<Flight> {
     List<Flight> findFlightsByAirportCode(String code);
     List<Flight> findListOfFlightBetweenDepartureAndDestinationForDate(String originCode, String destinationCode, Date parseDate);
 
+    //List<Flight> findFlightsByAirportCode(String code);
+    Flight findByNumber(String number);
+
 }

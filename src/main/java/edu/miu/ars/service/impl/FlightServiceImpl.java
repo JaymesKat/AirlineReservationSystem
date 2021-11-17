@@ -69,7 +69,12 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+
     public List<Flight> findListOfFlightBetweenDepartureAndDestinationForDate(String originCode, String destinationCode, Date date) {
         return flightRepository.findListOfFlightBetweenDepartureAndDestinationForDate(originCode, destinationCode, date);
+    }
+    public Flight findByNumber(String number) {
+        return flightRepository.findByNumber(number);
+
     }
 }

@@ -11,8 +11,13 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     @Query("from Reservation")
     List<Reservation> findFlightsByAirportCode();
+
    // @Query("select r.ticketList from Reservation r where r.code:code")
     //List<Reservation> cancelReservation();
 
+    //Reservation findByCode(String reservationCode);
+
+
     Reservation findByCode(String reservationCode);
 }
+

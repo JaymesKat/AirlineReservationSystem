@@ -1,43 +1,54 @@
 package edu.miu.ars.domain;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 public class Reservation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 6,nullable = false)
+    @Column(length = 6)
     private String code;
 
 
-    @OneToMany(mappedBy = "reservation",cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private List<Ticket> ticketList = new ArrayList<>();
-
+    @OneToMany(mappedBy = "reservation",cascade = {CascadeType.ALL})
+    private List<FlightInfo> flightInfos = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(32) default 'PENDING'")
     private ReservationState status;
 
-
-    public void addTicket(Ticket ticket) {
-        if ( ticket != null)
-            ticketList.add(ticket);
+    public void addFlightInfo(FlightInfo flightInfo) {
+        if ( flightInfo != null)
+            flightInfos.add(flightInfo);
+            flightInfo.setReservation(this);
     }
-    public boolean removeTicket(Ticket ticket){
+    public boolean removeFlightInfo(FlightInfo flightInfo){
         boolean result = false;
-        if(ticket != null){
-            result =  ticketList.remove(ticket);
+        if(flightInfo != null){
+            result =  flightInfos.remove(flightInfo);
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                ", code='" + code + '\'' +
+                ", flightInfos=" + flightInfos +
+                ", status=" + status +
+                '}';
+    }
+
 }
