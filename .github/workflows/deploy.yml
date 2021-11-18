@@ -137,5 +137,5 @@ jobs:
           application_name: ${{ secrets.EBS_APP_NAME }}
           environment_name: ${{ secrets.EBS_ENV_NAME }}
           version_label: ${{github.SHA}}
-          region: us-east-1
+          region: us-west-1
           deployment_package: AirlineReservationSystem-0.0.1-SNAPSHOT.jar
